@@ -93,7 +93,7 @@
             </children></Pane>
     </left>
     <top>
-        <Pane prefHeight="107.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
+        <Pane prefHeight="100.0" prefWidth="1200.0" BorderPane.alignment="CENTER">
             <children>
                 <Polyline fill="#0a4451" layoutX="553.0" layoutY="-316.0" points="160.0, 316.0, 160.0, 370.0, 46.0, 387.5, -66.0, 370.0, -66.0, 316.0" stroke="WHITE" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="6.0" />
                 <Polyline fill="#80ff0000" layoutX="601.0" layoutY="-322.0" points="102.0, 322.0, 102.0, 366.0, -1.0, 393.0, -104.0, 366.0, -104.0, 322.0" stroke="WHITE" strokeType="INSIDE">
