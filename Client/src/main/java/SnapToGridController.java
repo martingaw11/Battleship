@@ -1,21 +1,28 @@
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 public class SnapToGridController {
 
     @FXML
     Pane pane;
+
+    @FXML
+    BorderPane root;
 
     @FXML
     Button resetButton, shuffleButton, deployFleet;
@@ -90,6 +97,14 @@ public class SnapToGridController {
                 shuffleBoats(toShuffle);
             }
             shuffleButton.setDisable(false);
+        });
+        deployFleet.setOnAction(e -> {
+            try {
+                BorderPane temp = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SearchingForPlayer.fxml")));
+                root.getScene().setRoot(temp);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         // Ensure pane is focused to receive key events

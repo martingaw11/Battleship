@@ -11,12 +11,8 @@ public class ClientGUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            Pane test = loader.load(Objects.requireNonNull(getClass().getResource("SnapToGrid.fxml")).openStream());
-            BorderPane root = new BorderPane();
-            root.setCenter(test);
-            BorderPane.setAlignment(test, Pos.CENTER);
-            primaryStage.setScene(new Scene(root));
+            BorderPane test = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SnapToGrid.fxml")));
+            primaryStage.setScene(new Scene(test));
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
