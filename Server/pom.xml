@@ -29,15 +29,15 @@
 
         <dependency>
             <groupId>org.openjfx</groupId>
-            <artifactId>javafx</artifactId>
-            <version>${javafx.version}</version>
+            <artifactId>javafx-controls</artifactId>
+            <version>19.0.2.1</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>12</version>
+            <version>19.0.2.1</version>
         </dependency>
 
     </dependencies>
