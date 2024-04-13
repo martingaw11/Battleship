@@ -1,4 +1,6 @@
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 
@@ -10,16 +12,25 @@ public class Piece {
     private int gridX, gridY, tileSize;
     private Rectangle r;
     boolean rotate, down;
+    private String name;
+    private ImagePattern image, imageUp;
 
-    public Piece(double x, double y, int tileSize, Rectangle r) {
+    public Piece(double x, double y, int tileSize, Rectangle r, String name) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.tileSize = tileSize;
+        this.name = name;
         gridX = -1;
         gridY = -1;
         rotate = false;
         down = false;
+        image = new ImagePattern(new Image(name + ".png"));
+        imageUp = new ImagePattern(new Image(name + "UP.png"));
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setY(double y) {
@@ -58,9 +69,11 @@ public class Piece {
         if (!rotate) {
             r.setWidth(tileSize*40);
             r.setHeight(40);
+            r.setFill(image);
         }else{
             r.setHeight(tileSize*40);
             r.setWidth(40);
+            r.setFill(imageUp);
         }
         r.setTranslateX(x);
         r.setTranslateY(y);

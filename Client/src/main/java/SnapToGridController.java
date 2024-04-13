@@ -2,11 +2,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 
@@ -34,9 +36,11 @@ public class SnapToGridController {
     private HashMap<Piece, Pair<Integer, Integer>> boatList;
     private Rectangle[][] grid;
     private boolean rotateMode = false;
+    private int count = 0;
 
     @FXML
     public void initialize() {
+        deployFleet.setDisable(true);
         grid = new Rectangle[spots][spots];
         for (int i = 0; i < size; i += squareSize) {
             for (int j = 0; j < size; j += squareSize) {
@@ -51,15 +55,14 @@ public class SnapToGridController {
         }
         boatList = new HashMap<>();
         int[] boatSizes = {5, 4, 3, 3, 2};
+        String[] boatNames = {"AircraftCarrier", "BattleShip", "Submarine", "Cruiser", "Destroyer"};
         for (int i = 0; i < 5; i++) {
             Rectangle r = new Rectangle();
-            r.setFill(Color.GREEN);
             r.setStroke(Color.BLACK);
-            r.setOpacity(0.2);
             int tileSize = boatSizes[i];
             int x = 528 + (5-tileSize)*20;
             int y = 27 + i*80;
-            Piece p = new Piece(x, y, tileSize, r);
+            Piece p = new Piece(x, y, tileSize, r, boatNames[i]);
             boatList.put(p, new Pair<>(x, y));
 
             r.setOnMousePressed(event -> pressed(event, p));
@@ -82,8 +85,10 @@ public class SnapToGridController {
         resetButton.setOnAction(e -> {
             resetButton.setDisable(true);
             for(Piece toClear : boatList.keySet()){
-                clearPreviousPosition(toClear);
-                resetPosition(toClear);
+                if (toClear.getGridX() != -1) {
+                    clearPreviousPosition(toClear);
+                    resetPosition(toClear);
+                }
             }
             resetButton.setDisable(false);
         });
@@ -97,6 +102,8 @@ public class SnapToGridController {
                 shuffleBoats(toShuffle);
             }
             shuffleButton.setDisable(false);
+            count = 5;
+            deployFleet.setDisable(false);
         });
         deployFleet.setOnAction(e -> {
             try {
@@ -146,6 +153,7 @@ public class SnapToGridController {
     public void released(MouseEvent event, Piece p) {
         int gridx;
         int gridy;
+        if(p.getGridX() == -1) count++;
         if(!p.getRotate()){
             gridx = (int)((p.getX() + 40 * p.getTileSize() / 2) /squareSize - p.getTileSize()/2);
             gridy = (int)(p.getY() + 20) / squareSize;
@@ -158,7 +166,7 @@ public class SnapToGridController {
         if(!p.getRotate()){
             if(gridx > 10-p.getTileSize() || gridy > 9 || gridx<0 || gridy < 0){
                 resetPosition(p);
-                pane.setCursor(Cursor.OPEN_HAND);
+                pane.setCursor(Cursor.DEFAULT);
                 return;
             }
             for(int i = 0; i < p.getTileSize(); i++){
@@ -167,7 +175,7 @@ public class SnapToGridController {
                 else {
                     resetPosition(p);
                     gridPosTemp.clear();
-                    pane.setCursor(Cursor.OPEN_HAND);
+                    pane.setCursor(Cursor.DEFAULT);
                     return;
                 }
             }
@@ -175,7 +183,7 @@ public class SnapToGridController {
         }else{
             if(gridx > 9 || gridy > 10-p.getTileSize() || gridx<0 || gridy < 0){
                 resetPosition(p);
-                pane.setCursor(Cursor.OPEN_HAND);
+                pane.setCursor(Cursor.DEFAULT);
                 return;
             }
             for(int i = 0; i < p.getTileSize(); i++){
@@ -184,7 +192,7 @@ public class SnapToGridController {
                 else {
                     resetPosition(p);
                     gridPosTemp.clear();
-                    pane.setCursor(Cursor.OPEN_HAND);
+                    pane.setCursor(Cursor.DEFAULT);
                     return;
                 }
             }
@@ -200,6 +208,8 @@ public class SnapToGridController {
         p.setGridY(gridy);
         p.draw();
         pane.setCursor(Cursor.OPEN_HAND);
+        if(count == 5)
+            deployFleet.setDisable(false);
     }
 
     private void resetPosition(Piece p) {
@@ -210,6 +220,9 @@ public class SnapToGridController {
         p.setGridX(-1);
         p.setGridY(-1);
         p.draw();
+        count--;
+        if(count != 5)
+            deployFleet.setDisable(true);
     }
 
     private void clearPreviousPosition(Piece p) {
@@ -275,6 +288,24 @@ public class SnapToGridController {
         p.setGridX(gridx);
         p.setGridY(gridy);
         p.draw();
+    }
+
+    public HashMap<String, ArrayList<Pair<Integer, Integer>>> toSend(){
+        HashMap<String, ArrayList<Pair<Integer, Integer>>> toReturn = new HashMap<>();
+        for(Piece toStore : boatList.keySet()){
+            ArrayList<Pair<Integer, Integer>> temp = new ArrayList<>();
+            if(!toStore.getRotate()){
+                for(int i = 0; i < toStore.getTileSize(); i++){
+                    temp.add(new Pair<>(toStore.getGridX()+i, toStore.getGridY()));
+                }
+            }else{
+                for(int i = 0; i < toStore.getTileSize(); i++){
+                    temp.add(new Pair<>(toStore.getGridX(), toStore.getGridY()+i));
+                }
+            }
+            toReturn.put(toStore.getName(), temp);
+        }
+        return toReturn;
     }
 
 }

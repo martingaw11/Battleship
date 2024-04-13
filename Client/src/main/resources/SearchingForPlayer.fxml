@@ -13,17 +13,17 @@
 <?import javafx.scene.shape.MoveTo?>
 <?import javafx.scene.shape.Path?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SearchingForPlayerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SearchingForPlayerController">
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Circle fill="#1f51ff" layoutX="600.0" layoutY="400.0" opacity="0.5" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="400.0" opacity="0.5" radius="40.0" stroke="#1f51ff" strokeType="OUTSIDE" strokeWidth="6.0" />
-            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="400.0" opacity="0.5" radius="90.0" stroke="#1f51ff" strokeWidth="6.0" />
-            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="400.0" opacity="0.5" radius="140.0" stroke="#1f51ff" strokeWidth="6.0" />
-            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="400.0" opacity="0.5" radius="190.0" stroke="#1f51ff" strokeWidth="6.0" />
-            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="400.0" opacity="0.5" radius="250.0" stroke="#1f51ff" strokeWidth="6.0" />
-            <Pane fx:id="paneToRotate" layoutX="350.0" layoutY="150.0" prefHeight="500.0" prefWidth="500.0">
+            <Circle fill="#1f51ff" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="40.0" stroke="#1f51ff" strokeType="OUTSIDE" strokeWidth="6.0" />
+            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="90.0" stroke="#1f51ff" strokeWidth="6.0" />
+            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="140.0" stroke="#1f51ff" strokeWidth="6.0" />
+            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="190.0" stroke="#1f51ff" strokeWidth="6.0" />
+            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="250.0" stroke="#1f51ff" strokeWidth="6.0" />
+            <Pane fx:id="paneToRotate" layoutX="350.0" layoutY="38.0" prefHeight="500.0" prefWidth="500.0">
                <children>
                   <Path layoutX="233.0" layoutY="230.0" opacity="0.5" stroke="TRANSPARENT" strokeType="INSIDE">
                       <elements>

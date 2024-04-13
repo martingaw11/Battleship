@@ -14,12 +14,12 @@
     <center>
         <Pane fx:id="pane" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
             <children>
-                <Circle fill="#1f93ff00" layoutX="90.0" layoutY="511.0" radius="89.0" stroke="#7f00ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE">
+                <Circle fill="#1f93ff00" layoutX="90.0" layoutY="510.0" radius="89.0" stroke="#7f00ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE">
                     <effect>
                         <Glow level="1.0" />
                     </effect>
                 </Circle>
-                <Circle fill="#1f93ff00" layoutX="325.0" layoutY="513.0" radius="89.0" stroke="#7f00ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE">
+                <Circle fill="#1f93ff00" layoutX="325.0" layoutY="509.0" radius="89.0" stroke="#7f00ff" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE">
                     <effect>
                         <Glow level="1.0" />
                     </effect>
@@ -64,12 +64,12 @@
                         <Glow level="1.0" />
                     </effect>
                 </Line>
-                <Button fx:id="resetButton" layoutX="14.0" layoutY="438.0" mnemonicParsing="false" stylesheets="@Button.css" text="Reset" textFill="WHITE">
+                <Button fx:id="resetButton" layoutX="14.0" layoutY="435.0" mnemonicParsing="false" stylesheets="@Button.css" text="Reset" textFill="WHITE">
                     <font>
                         <Font size="30.0" />
                     </font>
                 </Button>
-                <Button fx:id="shuffleButton" layoutX="250.0" layoutY="438.0" mnemonicParsing="false" stylesheets="@Button.css" text="Shuffle" textFill="WHITE">
+                <Button fx:id="shuffleButton" layoutX="250.0" layoutY="436.0" mnemonicParsing="false" stylesheets="@Button.css" text="Shuffle" textFill="WHITE">
                     <font>
                         <Font size="30.0" />
                     </font>
