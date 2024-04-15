@@ -11,10 +11,21 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #11161A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainMenuController">
-    <center>
-        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+   <left>
+      <Pane prefHeight="700.0" prefWidth="674.0" BorderPane.alignment="CENTER">
+         <children>
+              <ImageView fitHeight="479.0" fitWidth="671.0" layoutX="1.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../images/Logo.png" />
+                  </image>
+              </ImageView>
+         </children>
+      </Pane>
+   </left>
+   <right>
+        <Pane prefHeight="700.0" prefWidth="811.0" BorderPane.alignment="CENTER">
             <children>
-            <Line endX="100.0" layoutX="633.0" layoutY="24.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+            <Line endX="100.0" layoutX="295.0" layoutY="192.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
                <effect>
                   <DropShadow spread="0.6">
                      <color>
@@ -23,7 +34,7 @@
                   </DropShadow>
                </effect>
             </Line>
-            <Line endX="100.0" layoutX="633.0" layoutY="83.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+            <Line endX="100.0" layoutX="295.0" layoutY="251.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
                <effect>
                   <DropShadow spread="0.6">
                      <color>
@@ -32,7 +43,7 @@
                   </DropShadow>
                </effect>
             </Line>
-            <Line endX="100.0" layoutX="633.0" layoutY="142.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+            <Line endX="100.0" layoutX="295.0" layoutY="310.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
                <effect>
                   <DropShadow spread="0.6">
                      <color>
@@ -41,7 +52,7 @@
                   </DropShadow>
                </effect>
             </Line>
-            <Line endX="100.0" layoutX="633.0" layoutY="201.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+            <Line endX="100.0" layoutX="295.0" layoutY="369.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
                <effect>
                   <DropShadow spread="0.6">
                      <color>
@@ -50,7 +61,7 @@
                   </DropShadow>
                </effect>
             </Line>
-            <Line endX="217.0" layoutX="633.0" layoutY="284.0" startX="-282.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+            <Line endX="217.0" layoutX="295.0" layoutY="452.0" startX="-282.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
                <effect>
                   <DropShadow spread="0.6">
                      <color>
@@ -59,7 +70,7 @@
                   </DropShadow>
                </effect>
             </Line>
-            <Line endX="219.0" endY="-1.0" layoutX="631.0" layoutY="340.0" startX="-280.0" startY="-1.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+            <Line endX="219.0" endY="-1.0" layoutX="293.0" layoutY="508.0" startX="-280.0" startY="-1.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
                <effect>
                   <DropShadow spread="0.6">
                      <color>
@@ -68,38 +79,27 @@
                   </DropShadow>
                </effect>
             </Line>
-                <Button fx:id="pve" layoutX="468.0" layoutY="26.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="265.0" stylesheets="@../stylesheets/menuButtons.css" text="Play vs AI">
+                <Button fx:id="pve" layoutX="130.0" layoutY="194.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="265.0" stylesheets="@../stylesheets/menuButtons.css" text="Play vs AI">
                     <font>
                         <Font name="Verdana" size="25.0" />
                     </font>
                 </Button>
-            <Button fx:id="pvp" layoutX="468.0" layoutY="85.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="265.0" stylesheets="@../stylesheets/menuButtons.css" text="Play vs Player">
+            <Button fx:id="pvp" layoutX="130.0" layoutY="253.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="265.0" stylesheets="@../stylesheets/menuButtons.css" text="Play vs Player">
                <font>
                   <Font name="Verdana" size="25.0" />
                </font>
             </Button>
-            <Button fx:id="rules" layoutX="468.0" layoutY="144.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="265.0" stylesheets="@../stylesheets/menuButtons.css" text="Rules">
+            <Button fx:id="rules" layoutX="130.0" layoutY="312.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="265.0" stylesheets="@../stylesheets/menuButtons.css" text="Rules">
                <font>
                   <Font name="Verdana" size="25.0" />
                </font>
             </Button>
-            <Button fx:id="exitGame" layoutX="351.0" layoutY="284.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="499.0" stylesheets="@../stylesheets/menuButtons.css" text="Exit Game">
+            <Button fx:id="exitGame" layoutX="13.0" layoutY="452.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="499.0" stylesheets="@../stylesheets/menuButtons.css" text="Exit Game">
                <font>
                   <Font name="Verdana" size="25.0" />
                </font>
             </Button>
             </children>
         </Pane>
-    </center>
-   <top>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-              <ImageView fitHeight="251.0" fitWidth="703.0" layoutX="249.0" layoutY="-21.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                      <Image url="@../images/Title.png" />
-                  </image>
-              </ImageView>
-         </children>
-      </Pane>
-   </top>
+   </right>
 </BorderPane>
