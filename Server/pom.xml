@@ -15,7 +15,7 @@
         <javafx.version>12.0.1</javafx.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <exec.mainClass>Server</exec.mainClass>
+        <exec.mainClass>ServerUI</exec.mainClass>
     </properties>
 
     <dependencies>

@@ -25,8 +25,8 @@ public class Piece {
         gridY = -1;
         rotate = false;
         down = false;
-        image = new ImagePattern(new Image(name + ".png"));
-        imageUp = new ImagePattern(new Image(name + "UP.png"));
+        image = new ImagePattern(new Image("images/" + name + ".png"));
+        imageUp = new ImagePattern(new Image("images/" + name + "UP.png"));
     }
 
     public String getName() {

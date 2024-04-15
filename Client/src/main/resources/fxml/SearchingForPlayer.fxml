@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.ArcTo?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.ClosePath?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.LineTo?>
+<?import javafx.scene.shape.MoveTo?>
+<?import javafx.scene.shape.Path?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #11161A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SearchingForPlayerController">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Circle fill="#1ad676" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="20.0" stroke="#1ad676" strokeType="INSIDE" />
+            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="40.0" stroke="#1ad676" strokeType="OUTSIDE" strokeWidth="6.0" />
+            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="90.0" stroke="#1ad676" strokeWidth="6.0" />
+            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="140.0" stroke="#1ad676" strokeWidth="6.0" />
+            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="190.0" stroke="#1ad676" strokeWidth="6.0" />
+            <Circle fill="#1f93ff00" layoutX="600.0" layoutY="288.0" opacity="0.5" radius="250.0" stroke="#1ad676" strokeWidth="6.0" />
+            <Pane fx:id="paneToRotate" layoutX="350.0" layoutY="38.0" prefHeight="500.0" prefWidth="500.0">
+               <children>
+                  <Path layoutX="233.0" layoutY="230.0" opacity="0.5" stroke="TRANSPARENT" strokeType="INSIDE">
+                      <elements>
+                          <MoveTo x="17.0" />
+                          <ArcTo radiusX="20.0" radiusY="20.0" y="12.0" />
+                          <LineTo x="-200.0" y="-100.0" />
+                        <ArcTo radiusX="293.0" radiusY="447.0" sweepFlag="true" x="24.0" y="-228.0" />
+                          <ClosePath />
+                      </elements>
+                     <fill>
+                        <RadialGradient centerX="0.9226519337016574" centerY="0.1919431279620853" focusAngle="-59.77" focusDistance="0.2068965517241379" radius="0.9310344827586207">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.10196078568696976" green="0.8392156958580017" blue="0.4627451002597809" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.06666667014360428" green="0.08627451211214066" blue="0.10196078568696976" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </RadialGradient>
+                     </fill>
+                  </Path>
+                  <Line endX="9.0" endY="-247.01849365234375" layoutX="248.0" layoutY="249.0" opacity="0.8" startX="1.0" startY="-20.0" stroke="#1ad676" strokeLineCap="ROUND" strokeWidth="6.0" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

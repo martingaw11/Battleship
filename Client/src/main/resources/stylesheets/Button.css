@@ -1,0 +1,75 @@
+#resetButton{
+    -fx-background-color: #11161A;
+    -fx-font-weight: bold;
+    -fx-background-radius: 50em;
+    -fx-min-width: 150px;
+    -fx-min-height: 150px;
+    -fx-max-height: 150px;
+    -fx-max-width: 150px;
+    -fx-font-size: 25;
+    -fx-font-family: "Verdana";
+}
+#resetButton:hover {
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #ff5400 0%, #be1d00 100%),
+            #FF3131,
+            #E35335,
+            radial-gradient(center 50% 50%, radius 100%, #FF4433, #FF2400);
+}
+#resetButton:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+#resetButton Text {
+    -fx-fill: white;
+    -fx-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );
+}
+
+#shuffleButton{
+    -fx-background-color: #11161A;
+    -fx-font-weight: bold;
+    -fx-background-radius: 50em;
+    -fx-min-width: 150px;
+    -fx-min-height: 150px;
+    -fx-max-height: 150px;
+    -fx-max-width: 150px;
+    -fx-font-size: 25;
+    -fx-font-family: "Verdana";
+}
+#shuffleButton:hover {
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #50C878 0%, #228B22 100%),
+            #32CD32,
+            #00A36C,
+            radial-gradient(center 50% 50%, radius 100%, #4CBB17, #0FFF50);
+}
+#shuffleButton:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+#shuffleButton Text {
+    -fx-fill: white;
+    -fx-effect: dropshadow( gaussian , #a30000 , 0,0,0,2 );
+}
+#deployFleet {
+    -fx-background-color: #122b24;
+    -fx-background-radius: 50;
+    -fx-font-family: "Verdana";
+    -fx-text-fill: linear-gradient(navajowhite, #d0d0d0);
+    -fx-font-size: 20;
+}
+#deployFleet:hover{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #E0FFFF 0%, #00FFFF 100%),
+            white,
+            cyan,
+            radial-gradient(center 50% 50%, radius 100%, #00FFFF, #E0FFFF);
+    -fx-text-fill: linear-gradient(black,gray);
+}
+#deployFleet:pressed {
+    -fx-padding: 5 7 6 7;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}
+#deployFleet Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}

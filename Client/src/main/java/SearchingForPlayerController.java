@@ -8,6 +8,8 @@ public class SearchingForPlayerController {
     @FXML
     public Pane paneToRotate;
 
+    Client clientConnection;
+
     @FXML
     public void initialize(){
         RotateTransition rt = new RotateTransition();

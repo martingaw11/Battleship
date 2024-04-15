@@ -2,13 +2,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 
@@ -16,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Random;
 
 public class SnapToGridController {
 
@@ -28,6 +25,8 @@ public class SnapToGridController {
 
     @FXML
     Button resetButton, shuffleButton, deployFleet;
+
+    Client clientConnection;
 
     private int size = 400;
     private int spots = 10;
@@ -46,8 +45,8 @@ public class SnapToGridController {
             for (int j = 0; j < size; j += squareSize) {
                 Rectangle r = new Rectangle(i, j, squareSize, squareSize);
                 grid[i / squareSize][j / squareSize] = r;
-                r.setFill(Color.LIGHTSKYBLUE);
-                r.setStroke(Color.DARKBLUE);
+                r.setFill(Color.web("#072F0F"));
+                r.setStroke(Color.WHITE);
                 r.setStrokeWidth(3);
                 r.setOpacity(0.5);
                 pane.getChildren().add(r);
@@ -58,7 +57,7 @@ public class SnapToGridController {
         String[] boatNames = {"AircraftCarrier", "BattleShip", "Submarine", "Cruiser", "Destroyer"};
         for (int i = 0; i < 5; i++) {
             Rectangle r = new Rectangle();
-            r.setStroke(Color.BLACK);
+            r.setStroke(Color.WHITE);
             int tileSize = boatSizes[i];
             int x = 528 + (5-tileSize)*20;
             int y = 27 + i*80;
@@ -107,7 +106,10 @@ public class SnapToGridController {
         });
         deployFleet.setOnAction(e -> {
             try {
-                BorderPane temp = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SearchingForPlayer.fxml")));
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/SearchingForPlayer.fxml")));
+                BorderPane temp = loader.load();
+                SearchingForPlayerController ctr = loader.getController();
+                ctr.clientConnection = clientConnection;
                 root.getScene().setRoot(temp);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
@@ -170,7 +172,7 @@ public class SnapToGridController {
                 return;
             }
             for(int i = 0; i < p.getTileSize(); i++){
-                if(!grid[gridx+i][gridy].getFill().equals(Color.CRIMSON))
+                if(!grid[gridx+i][gridy].getFill().equals(Color.web("#FF6058")))
                     gridPosTemp.add(new Pair<>(gridx+i, gridy));
                 else {
                     resetPosition(p);
@@ -187,7 +189,7 @@ public class SnapToGridController {
                 return;
             }
             for(int i = 0; i < p.getTileSize(); i++){
-                if(!grid[gridx][gridy+i].getFill().equals(Color.CRIMSON))
+                if(!grid[gridx][gridy+i].getFill().equals(Color.web("#FF6058")))
                     gridPosTemp.add(new Pair<>(gridx, gridy+i));
                 else {
                     resetPosition(p);
@@ -199,7 +201,7 @@ public class SnapToGridController {
             p.setDown(true);
         }
         for(Pair<Integer, Integer> gridPos : gridPosTemp){
-            grid[gridPos.getKey()][gridPos.getValue()].setFill(Color.CRIMSON);
+            grid[gridPos.getKey()][gridPos.getValue()].setFill(Color.web("#FF6058"));
         }
         gridPosTemp.clear();
         p.setX(squareSize * gridx);
@@ -229,10 +231,10 @@ public class SnapToGridController {
         if(p.getGridY() != -1){
             if(p.isDown())
                 for(int i = 0; i < p.getTileSize(); i++)
-                    grid[p.getGridX()][p.getGridY()+i].setFill(Color.LIGHTSKYBLUE);
+                    grid[p.getGridX()][p.getGridY()+i].setFill(Color.web("#072F0F"));
             else
                 for(int i = 0; i < p.getTileSize(); i++)
-                    grid[p.getGridX()+i][p.getGridY()].setFill(Color.LIGHTSKYBLUE);
+                    grid[p.getGridX()+i][p.getGridY()].setFill(Color.web("#072F0F"));
         }
     }
 
@@ -251,7 +253,7 @@ public class SnapToGridController {
                     continue;
                 }
                 for(int i = 0; i < p.getTileSize(); i++){
-                    if(!grid[gridx+i][gridy].getFill().equals(Color.CRIMSON))
+                    if(!grid[gridx+i][gridy].getFill().equals(Color.web("#FF6058")))
                         gridPosTemp.add(new Pair<>(gridx+i, gridy));
                     else {
                         gridPosTemp.clear();
@@ -266,7 +268,7 @@ public class SnapToGridController {
                     continue;
                 }
                 for(int i = 0; i < p.getTileSize(); i++){
-                    if(!grid[gridx][gridy+i].getFill().equals(Color.CRIMSON))
+                    if(!grid[gridx][gridy+i].getFill().equals(Color.web("#FF6058")))
                         gridPosTemp.add(new Pair<>(gridx, gridy+i));
                     else {
                         gridPosTemp.clear();
@@ -280,7 +282,7 @@ public class SnapToGridController {
             break;
         }
         for(Pair<Integer, Integer> gridPos : gridPosTemp){
-            grid[gridPos.getKey()][gridPos.getValue()].setFill(Color.CRIMSON);
+            grid[gridPos.getKey()][gridPos.getValue()].setFill(Color.web("#FF6058"));
         }
         gridPosTemp.clear();
         p.setX(squareSize * gridx);
@@ -307,5 +309,6 @@ public class SnapToGridController {
         }
         return toReturn;
     }
+
 
 }

@@ -1,18 +1,40 @@
 import javafx.application.Application;
-import javafx.geometry.Pos;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.Objects;
 
 public class ClientGUI extends Application {
+    Client clientConnection;
     @Override
     public void start(Stage primaryStage) {
+        clientConnection = new Client(data->{
+            if(((Message)data).newUser){
+                System.out.println(((Message) data).userID);
+            }
+            Platform.runLater(() ->{
+                System.out.println(data);
+            });
+        });
+        clientConnection.start();
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
         try {
-            BorderPane test = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SnapToGrid.fxml")));
-            primaryStage.setScene(new Scene(test));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/Username.fxml")));
+            Parent root = loader.load();
+            primaryStage.setScene(new Scene(root));
+            UsernameController ctr = loader.getController();
+            ctr.clientConnection = clientConnection;
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

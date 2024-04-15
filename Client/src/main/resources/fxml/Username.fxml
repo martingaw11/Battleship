@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #11161A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UsernameController">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Line endX="100.0" layoutX="632.0" layoutY="103.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+               <effect>
+                  <DropShadow spread="0.6">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Line>
+            <Line endX="100.0" layoutX="632.0" layoutY="162.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+               <effect>
+                  <DropShadow spread="0.6">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Line>
+            <Line endX="100.0" layoutX="632.0" layoutY="189.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+               <effect>
+                  <DropShadow spread="0.6">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Line>
+            <Line endX="100.0" layoutX="632.0" layoutY="248.0" startX="-165.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+               <effect>
+                  <DropShadow spread="0.6">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Line>
+            <Line endX="217.0" layoutX="633.0" layoutY="284.0" startX="-282.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+               <effect>
+                  <DropShadow spread="0.6">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Line>
+            <Line endX="219.0" endY="-1.0" layoutX="631.0" layoutY="340.0" startX="-280.0" startY="-1.0" stroke="AQUA" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeWidth="3.0">
+               <effect>
+                  <DropShadow spread="0.6">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Line>
+            <Button fx:id="enterGame" layoutX="467.0" layoutY="191.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="265.0" stylesheets="@../stylesheets/menuButtons.css" text="Enter Game">
+               <font>
+                  <Font name="Verdana" size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="exitGame" layoutX="351.0" layoutY="284.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="499.0" stylesheets="@../stylesheets/menuButtons.css" text="Exit Game">
+               <font>
+                  <Font name="Verdana" size="25.0" />
+               </font>
+            </Button>
+            <Text fill="WHITE" layoutX="472.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Username:">
+               <font>
+                  <Font name="Verdana" size="30.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <TextField fx:id="usernameField" alignment="CENTER" layoutX="1.0" layoutY="103.0" prefHeight="58.0" prefWidth="1200.0" promptText="Username" style="-fx-background-color: #11161A; -fx-text-fill: white;">
+               <font>
+                  <Font name="Verdana" size="30.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+   </center>
+   <top>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="251.0" fitWidth="703.0" layoutX="249.0" layoutY="-21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Title.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+   </top>
+</BorderPane>

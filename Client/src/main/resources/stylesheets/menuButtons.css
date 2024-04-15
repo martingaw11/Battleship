@@ -1,0 +1,25 @@
+.button{
+    -fx-background-color: #11161A;
+    -fx-text-fill: white;
+}
+
+.button:hover{
+    -fx-text-fill: black;
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #E0FFFF 0%, #00FFFF 100%),
+            white,
+            cyan,
+            radial-gradient(center 50% 50%, radius 100%, #00FFFF, #E0FFFF);
+}
+
+#exitGame{
+    -fx-background-color: #11161A;
+    -fx-text-fill: white;
+}
+#exitGame:hover{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #ff5400 0%, #be1d00 100%),
+            #FF3131,
+            #E35335,
+            radial-gradient(center 50% 50%, radius 100%, #FF4433, #FF2400);
+}
