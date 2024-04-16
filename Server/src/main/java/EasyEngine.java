@@ -50,6 +50,9 @@ public class EasyEngine implements Engine{
         // but need to recalculate if already targeted spot once
         while (targetBoard.get(xCoord).get(yCoord) == 1);
 
+        // update targetBoard to reflect we just shot at board position
+        targetBoard.get(xCoord).set(yCoord, 1);
+
         // return never before hit coordinate we found
         return new Pair<>(xCoord, yCoord);
     }
