@@ -16,7 +16,7 @@
    <left>
       <Pane prefHeight="700.0" prefWidth="674.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="508.0" fitWidth="585.0" layoutX="-1.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="479.0" fitWidth="671.0" layoutX="1.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Logo.png" />
                </image>
@@ -107,6 +107,18 @@
                <font>
                   <Font name="Verdana" size="30.0" />
                </font>
+            </TextField>
+            <TextField fx:id="alertUser" alignment="CENTER" editable="false" focusTraversable="false" layoutX="3.0" layoutY="106.0" prefHeight="58.0" prefWidth="517.0" style="-fx-text-fill: red; -fx-background-color: null;">
+               <font>
+                  <Font name="Verdana" size="30.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color red="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
             </TextField>
          </children>
       </Pane>
