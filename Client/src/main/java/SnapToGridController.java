@@ -24,7 +24,7 @@ public class SnapToGridController {
     BorderPane root;
 
     @FXML
-    Button resetButton, shuffleButton, deployFleet;
+    Button resetButton, shuffleButton, deployFleet, back;
 
     Client clientConnection;
 
@@ -45,10 +45,9 @@ public class SnapToGridController {
             for (int j = 0; j < size; j += squareSize) {
                 Rectangle r = new Rectangle(i, j, squareSize, squareSize);
                 grid[i / squareSize][j / squareSize] = r;
-                r.setFill(Color.web("#072F0F"));
-                r.setStroke(Color.WHITE);
+                r.setFill(Color.web("#11161A"));
+                r.setStroke(Color.CYAN);
                 r.setStrokeWidth(3);
-                r.setOpacity(0.5);
                 pane.getChildren().add(r);
             }
         }
@@ -109,6 +108,17 @@ public class SnapToGridController {
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/SearchingForPlayer.fxml")));
                 BorderPane temp = loader.load();
                 SearchingForPlayerController ctr = loader.getController();
+                ctr.clientConnection = clientConnection;
+                root.getScene().setRoot(temp);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        back.setOnAction(e -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/MainMenu.fxml")));
+                BorderPane temp = loader.load();
+                MainMenuController ctr = loader.getController();
                 ctr.clientConnection = clientConnection;
                 root.getScene().setRoot(temp);
             } catch (IOException ex) {
@@ -231,10 +241,10 @@ public class SnapToGridController {
         if(p.getGridY() != -1){
             if(p.isDown())
                 for(int i = 0; i < p.getTileSize(); i++)
-                    grid[p.getGridX()][p.getGridY()+i].setFill(Color.web("#072F0F"));
+                    grid[p.getGridX()][p.getGridY()+i].setFill(Color.web("#11161A"));
             else
                 for(int i = 0; i < p.getTileSize(); i++)
-                    grid[p.getGridX()+i][p.getGridY()].setFill(Color.web("#072F0F"));
+                    grid[p.getGridX()+i][p.getGridY()].setFill(Color.web("#11161A"));
         }
     }
 

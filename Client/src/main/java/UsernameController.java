@@ -15,7 +15,7 @@ public class UsernameController {
     Button enterGame, exitGame;
 
     @FXML
-    TextField usernameField;
+    TextField usernameField, alertUser;
 
     @FXML
     BorderPane root;
@@ -23,6 +23,10 @@ public class UsernameController {
     @FXML
     public void initialize(){
         enterGame.setOnAction(e -> {
+            if(usernameField.getText().isEmpty()){
+                alertUser.setText("Username can not be empty");
+                return;
+            }
             Message trialRun = new Message();
             trialRun.newUser = true;
             trialRun.userID = usernameField.getText();

@@ -23,3 +23,20 @@
             #E35335,
             radial-gradient(center 50% 50%, radius 100%, #FF4433, #FF2400);
 }
+#backToBase{
+    -fx-background-color: #11161A;
+    -fx-background-radius: 50;
+    -fx-font-family: "Verdana";
+    -fx-text-fill: linear-gradient(navajowhite, #d0d0d0);
+    -fx-font-size: 20;
+}
+#backToBase:hover{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #ff5400 0%, #be1d00 100%),
+            #FF3131,
+            #E35335,
+            radial-gradient(center 50% 50%, radius 100%, #FF4433, #FF2400);
+}
+#backToBase Text {
+    -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+}
