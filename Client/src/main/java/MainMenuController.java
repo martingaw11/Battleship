@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class MainMenuController {
     @FXML
-    Button pve, pvp, rules, exitGame;
+    Button pve, pvp, rules, exitGame, easy, medium, hard;
 
     @FXML
     BorderPane root;
@@ -18,30 +18,32 @@ public class MainMenuController {
     @FXML
     public void initialize(){
         pve.setOnAction(e -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/SnapToGrid.fxml")));
-                Parent temp = loader.load();
-                SnapToGridController ctr = loader.getController();
-                ctr.clientConnection = clientConnection;
-                root.getScene().setRoot(temp);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            pve.setDisable(true);
+            easy.setVisible(true);
+            medium.setVisible(true);
+            hard.setVisible(true);
         });
         pvp.setOnAction(e -> { // TEMPORARY so you can use both buttons to go to the next scene, there will be a separate scene for bot difficulty choice don't worry
-            try {
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/SnapToGrid.fxml")));
-                Parent temp = loader.load();
-                SnapToGridController ctr = loader.getController();
-                ctr.clientConnection = clientConnection;
-                root.getScene().setRoot(temp);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            transitionScene();
         });
         exitGame.setOnAction(e -> {
             Platform.exit();
             System.exit(0);
         });
+        easy.setOnAction(e -> transitionScene());
+        medium.setOnAction(e -> transitionScene());
+        hard.setOnAction(e -> transitionScene());
+    }
+
+    public void transitionScene(){
+        try {
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/SnapToGrid.fxml")));
+            Parent temp = loader.load();
+            SnapToGridController ctr = loader.getController();
+            ctr.clientConnection = clientConnection;
+            root.getScene().setRoot(temp);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

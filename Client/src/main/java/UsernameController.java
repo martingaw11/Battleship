@@ -27,10 +27,16 @@ public class UsernameController {
                 alertUser.setText("Username can not be empty");
                 return;
             }
-            GameMessage trialRun = new GameMessage();
-            trialRun.newUser = true;
-            trialRun.userID = usernameField.getText();
-            clientConnection.send(trialRun);
+            for(String test : clientConnection.userNames){
+                if(test.equals(usernameField.getText())){
+                    alertUser.setText("Username taken");
+                    return;
+                }
+            }
+            GameMessage toSend = new GameMessage();
+            toSend.newUser = true;
+            toSend.userID = usernameField.getText();
+            clientConnection.send(toSend);
             try {
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/MainMenu.fxml")));
                 Parent temp = loader.load();

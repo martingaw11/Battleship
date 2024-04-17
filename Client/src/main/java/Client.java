@@ -3,6 +3,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Consumer;
 
 
@@ -14,6 +16,8 @@ public class Client extends Thread{
 	// todo: clientID
 	String clientID;
 	String opponent;
+
+	Set<String> userNames = new HashSet<>();
 	ObjectOutputStream out;
 	ObjectInputStream in;
 

@@ -16,6 +16,7 @@ public class ClientGUI extends Application {
         clientConnection = new Client(data->{
             if(((GameMessage)data).newUser){
                 System.out.println(((GameMessage) data).userID);
+                clientConnection.userNames.addAll(((GameMessage)data).userNames);
             }
             Platform.runLater(() ->{
                 System.out.println(data);
