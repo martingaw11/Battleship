@@ -4,20 +4,50 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 
 public class Server{
 
+    /**
+     *  number of clients connected to server
+     */
     int count = 0;
+
+    /**
+     *  ArrayList of clientThread
+     */
     ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
 
+    /**
+     *  list of unique clients usernames
+     */
     Set<String> listOfClientsID;
+
+    /**
+     *  map of userName to clientThread
+     */
+    HashMap<String, ClientThread> clientMap;
+
+    /**
+     *  queue of clientThread waiting for opponent
+     */
+    Queue<ClientThread> gameQueue;
+
+    /**
+     *  ArrayList of GameThreads
+     */
+    ArrayList<GameThread> gamesInProgress;
+
+    /**
+     *  The server
+     */
     TheServer server;
+
+    /**
+     *  Callback
+     */
     private Consumer<Serializable> callback;
 
 
@@ -92,7 +122,7 @@ public class Server{
                 out = new ObjectOutputStream(connection.getOutputStream());
                 connection.setTcpNoDelay(true);
 
-                validateUserName();     // todo: allow only unique usernames
+                validateUserName();
 
 
             }
@@ -197,6 +227,20 @@ public class Server{
         }
 
     }//end of client thread
+
+    /**
+     * Thread listening for communication between two client playing against each other
+     */
+    class GameThread {
+        boolean versusPlayer = false;
+        ClientThread playerOne;
+        ClientThread playerTwo;
+
+        GameThread(ClientThread p1, ClientThread p2){
+            this.playerOne = p1;
+            this.playerTwo = p2;
+        }
+    }
 }
 
 
