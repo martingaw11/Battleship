@@ -132,20 +132,21 @@ public class Server{
             }
 
 
-            // Process client messages
+            // todo Process client request
             while (true) {
                 try {
 
-                    // Read a message from the client
+                    // Read a request from the client
                     GameMessage clientGameMessage = (GameMessage) in.readObject();
 
                     // if new client joins, add to clients online
                     if(clientGameMessage.newUser){
                         listOfClientsID.add(clientGameMessage.userID);
                         this.clientID = clientGameMessage.userID;
+                        callback.accept("adding " + clientGameMessage.userID + "to game base");
                         System.out.println("adding " + clientGameMessage.userID);
 
-
+                        // todo: add to clientMap
                         // todo: Should we notify Client A that Client B has joined party?
                         GameMessage newGameMessage = new GameMessage();
                         newGameMessage.MessageInfo = clientID + " joined chat";
@@ -160,7 +161,9 @@ public class Server{
                         }
                     }
                     else{
-                        // Update server && clients with the received message		//todo: set sender
+                        // todo: listening for client request
+                        // todo: if client request is "deploy" add thread to queue
+                        // Update server && clients with the received message
                         callback.accept("client: " + clientID + " sent: " + clientGameMessage.MessageInfo);
                         System.out.println("Sending message to: "+ clientGameMessage.recipient);
 
