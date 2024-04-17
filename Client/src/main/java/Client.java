@@ -16,7 +16,7 @@ public class Client extends Thread{
 	ObjectOutputStream out;
 	ObjectInputStream in;
 
-	Message ReceivedMessage;
+	GameMessage ReceivedMessage;
 
 	private Consumer<Serializable> callback;
 
@@ -40,7 +40,7 @@ public class Client extends Thread{
 
 			try {
 				//todo: update clients did something
-			ReceivedMessage = (Message)in.readObject();
+			ReceivedMessage = (GameMessage)in.readObject();
 
 			callback.accept(ReceivedMessage);
 			}
@@ -52,7 +52,7 @@ public class Client extends Thread{
     }
 
 	//todo:  clients sends a message
-	public void send(Message newMessage) {
+	public void send(GameMessage newMessage) {
 
 		try {
 			out.writeObject(newMessage);
@@ -67,7 +67,7 @@ public class Client extends Thread{
 
 		try {
 			// receive the usernames list from the server
-			Message message = ReceivedMessage;
+			GameMessage message = ReceivedMessage;
 
 			if (message.userNames.add(userID)){
 				message.userID = userID;

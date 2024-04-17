@@ -14,8 +14,8 @@ public class ClientGUI extends Application {
     @Override
     public void start(Stage primaryStage) {
         clientConnection = new Client(data->{
-            if(((Message)data).newUser){
-                System.out.println(((Message) data).userID);
+            if(((GameMessage)data).newUser){
+                System.out.println(((GameMessage) data).userID);
             }
             Platform.runLater(() ->{
                 System.out.println(data);

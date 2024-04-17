@@ -27,7 +27,7 @@ public class UsernameController {
                 alertUser.setText("Username can not be empty");
                 return;
             }
-            Message trialRun = new Message();
+            GameMessage trialRun = new GameMessage();
             trialRun.newUser = true;
             trialRun.userID = usernameField.getText();
             clientConnection.send(trialRun);

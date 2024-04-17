@@ -25,5 +25,7 @@ public class ServerUI extends Application {
                 System.exit(0);
             }
         });
+
+        primaryStage.show();
     }
 }
