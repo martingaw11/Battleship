@@ -37,6 +37,8 @@ public class UsernameController {
             toSend.newUser = true;
             toSend.userID = usernameField.getText();
             clientConnection.send(toSend);
+            clientConnection.clientID = usernameField.getText();
+            clientConnection.userNames = null;
             try {
                 FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/MainMenu.fxml")));
                 Parent temp = loader.load();
