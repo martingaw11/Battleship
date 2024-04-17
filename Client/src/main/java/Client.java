@@ -15,7 +15,7 @@ public class Client extends Thread{
 
 	// todo: clientID
 	String clientID;
-	String opponent;
+	String opponent;  // todo set after user is matched
 
 	Set<String> userNames = new HashSet<>();
 	ObjectOutputStream out;
@@ -66,32 +66,6 @@ public class Client extends Thread{
 			System.out.println("Error in sending message");
 			e.printStackTrace();
 		}
-	}
-
-	public boolean joinChat(String userID) {
-
-		try {
-			// receive the usernames list from the server
-			GameMessage message = ReceivedMessage;
-
-			if (message.userNames.add(userID)){
-				message.userID = userID;
-				clientID = userID;
-				message.newUser = true;
-				System.out.println("Success");
-
-				// send message to server
-				out.writeObject(message);
-				System.out.println("sent Success");
-				return true;
-			}
-
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-			callback.accept("Error: Could not communicate with the server");
-		}
-		return false;
 	}
 
 
