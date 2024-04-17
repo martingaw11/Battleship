@@ -18,7 +18,7 @@ public class ClientGUI extends Application {
                 clientConnection.userNames.addAll(((GameMessage)data).userNames);
             }
             Platform.runLater(() ->{
-                System.out.println(data);
+                System.out.println(((GameMessage) data).userID);
             });
         });
         clientConnection.start();
