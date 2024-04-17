@@ -28,17 +28,17 @@ public class Server{
     /**
      *  map of userName to clientThread
      */
-    HashMap<String, ClientThread> clientMap;
+    HashMap<String, ClientThread> clientMap = new HashMap<>();
 
     /**
      *  queue of clientThread waiting for opponent
      */
-    Queue<ClientThread> gameQueue;
+    Queue<ClientThread> gameQueue = new ArrayDeque<>();
 
     /**
      *  ArrayList of GameThreads
      */
-    ArrayList<GameThread> gamesInProgress;
+    ArrayList<GameThread> gamesInProgress = new ArrayList<>();
 
     /**
      *  The server
