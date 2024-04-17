@@ -24,23 +24,24 @@ public class MainMenuController {
             hard.setVisible(true);
         });
         pvp.setOnAction(e -> { // TEMPORARY so you can use both buttons to go to the next scene, there will be a separate scene for bot difficulty choice don't worry
-            transitionScene();
+            transitionScene(3);
         });
         exitGame.setOnAction(e -> {
             Platform.exit();
             System.exit(0);
         });
-        easy.setOnAction(e -> transitionScene());
-        medium.setOnAction(e -> transitionScene());
-        hard.setOnAction(e -> transitionScene());
+        easy.setOnAction(e -> transitionScene(0));
+        medium.setOnAction(e -> transitionScene(1));
+        hard.setOnAction(e -> transitionScene(2));
     }
 
-    public void transitionScene(){
+    public void transitionScene(int x){
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/SnapToGrid.fxml")));
             Parent temp = loader.load();
             SnapToGridController ctr = loader.getController();
             ctr.clientConnection = clientConnection;
+            ctr.difficulty = x;
             root.getScene().setRoot(temp);
         } catch (IOException ex) {
             throw new RuntimeException(ex);

@@ -10,7 +10,7 @@ public class Piece {
 
     private double x, y;
     private int gridX, gridY, tileSize;
-    private Rectangle r;
+    public Rectangle r;
     boolean rotate, down;
     private String name;
     private ImagePattern image, imageUp;

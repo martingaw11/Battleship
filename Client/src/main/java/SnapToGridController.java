@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Set;
 
 public class SnapToGridController {
 
@@ -36,6 +37,7 @@ public class SnapToGridController {
     private Rectangle[][] grid;
     private boolean rotateMode = false;
     private int count = 0;
+    int difficulty;
 
     @FXML
     public void initialize() {
@@ -104,14 +106,29 @@ public class SnapToGridController {
             deployFleet.setDisable(false);
         });
         deployFleet.setOnAction(e -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/SearchingForPlayer.fxml")));
-                BorderPane temp = loader.load();
-                SearchingForPlayerController ctr = loader.getController();
-                ctr.clientConnection = clientConnection;
-                root.getScene().setRoot(temp);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            if (difficulty == 3) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/SearchingForPlayer.fxml")));
+                    BorderPane temp = loader.load();
+                    SearchingForPlayerController ctr = loader.getController();
+                    ctr.clientConnection = clientConnection;
+                    root.getScene().setRoot(temp);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }else{
+                try {
+                    FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/Game.fxml")));
+                    BorderPane temp = loader.load();
+                    GameController ctr = loader.getController();
+                    ctr.clientConnection = clientConnection;
+                    ctr.boatList = Set.copyOf(boatList.keySet());
+                    ctr.boatPositions = toSend();
+                    ctr.drawUser();
+                    root.getScene().setRoot(temp);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         back.setOnAction(e -> {

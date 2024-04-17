@@ -1,0 +1,16 @@
+#userGrid Line{
+    -fx-stroke: cyan;
+    -fx-stroke-width: 3px;
+}
+.button{
+    -fx-background-color: lightblue;
+    -fx-border-color: cyan;
+    -fx-border-width: 1px;
+}
+.button:hover{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #E0FFFF 0%, #00FFFF 100%),
+            white,
+            cyan,
+            radial-gradient(center 50% 50%, radius 100%, #00FFFF, #E0FFFF);
+}
