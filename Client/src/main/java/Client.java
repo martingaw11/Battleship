@@ -13,6 +13,7 @@ public class Client extends Thread{
 
 	// todo: clientID
 	String clientID;
+	String opponent;
 	ObjectOutputStream out;
 	ObjectInputStream in;
 
