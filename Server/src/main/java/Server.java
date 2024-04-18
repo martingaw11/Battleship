@@ -92,7 +92,7 @@ public class Server{
         int count;
 
         String clientID;
-
+        String opponent;
         ObjectInputStream in;
         ObjectOutputStream out;
 
@@ -113,15 +113,26 @@ public class Server{
                 }
             }
         }
+        public void updateOneClient(GameMessage newGameMessage, ClientThread t) {
+
+            try {
+                t.out.writeObject(newGameMessage);
+            }
+            catch (Exception e) {
+                System.out.println("did not notify clients");
+            }
+        }
         public void processRequest(GameMessage clientRequest){
             switch(clientRequest.operationInfo){
                 case "deploy":
                     callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
+                    if(clientRequest.difficulty == 3){ deploy();}       // player vs player
                     System.out.println("deploy");
                     break;
 
                 case "backToBase":
                     callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
+                    if(clientRequest.difficulty == 3){ returnToBase();}       // player vs player
                     System.out.println("backToBase");
                     break;
 
@@ -136,6 +147,71 @@ public class Server{
             }
         }
 
+        // if player vs player mode -> add player to queue for opponent
+        // if queue has a pair -> deque 2 players and match them together
+        public void deploy(){
+
+            synchronized (gameQueue){
+
+                gameQueue.add(this);
+
+                if(gameQueue.size() % 2 == 0){
+                    try{
+                        ClientThread c1 = gameQueue.remove();
+                        ClientThread c2 = gameQueue.remove();
+
+                        // set opponents for c1 and c2
+                        c1.opponent = c2.clientID;
+                        c2.opponent = c1.clientID;
+
+                        // server notification
+                        callback.accept(c1.clientID + " fleet deployed....");
+                        callback.accept(c2.clientID + " fleet deployed....");
+                        callback.accept("Match found: " + c1.clientID + " VS " + c2.clientID);
+
+                        // send match found notification to clients
+                        GameMessage gameMessage1 = new GameMessage();   // send to c1
+                        gameMessage1.userID = c1.clientID;
+                        gameMessage1.opponent = c1.opponent;
+                        gameMessage1.opponentMatched = true;
+                        updateOneClient(gameMessage1, c1);
+
+                        GameMessage gameMessage2 = new GameMessage();   // send to c2
+                        gameMessage2.userID = c2.clientID;
+                        gameMessage2.opponent = c2.opponent;
+                        gameMessage2.opponentMatched = true;
+                        updateOneClient(gameMessage2, c2);
+
+                    }
+                    catch (NoSuchFieldError nil){
+                        System.out.println("unable to deque");
+                    }
+                }
+                else{
+                    callback.accept(this.clientID + "fleet deployed");
+                    callback.accept("stand by for opponent");
+                }
+
+            }
+        }
+
+        public void returnToBase(){
+
+            synchronized (gameQueue){
+                if(!gameQueue.isEmpty()){
+                    try{
+                        ClientThread c1 = this;
+                        gameQueue.remove(this);
+                        callback.accept(c1.clientID + " returning to base....");    // server notification
+                    }
+                    catch (NoSuchFieldError nil){
+                        System.out.println("unable to deque");
+                    }
+                }
+
+            }
+        }
+
         //todo: update clients moves
 
         public void run() {
@@ -145,7 +221,6 @@ public class Server{
                 connection.setTcpNoDelay(true);
 
                 validateUserName();
-
 
             }
             catch (IOException e) {
