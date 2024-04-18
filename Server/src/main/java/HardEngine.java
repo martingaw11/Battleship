@@ -80,6 +80,11 @@ public class HardEngine implements Engine {
             targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 1);
         }
 
+        // if ship has been sunk on last move, remove ship size from piecesLeft
+        if (info.shipSunk) {
+            piecesLeft.remove((Integer) info.sizeOfShip);
+        }
+
         // if possible move stack is not empty, engine is in target mode, pop targeted move off of stack
         if (!possibleMoves.empty()) {
             // make sure to store move for next shot selection
