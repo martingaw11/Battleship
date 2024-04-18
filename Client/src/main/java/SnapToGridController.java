@@ -130,6 +130,18 @@ public class SnapToGridController {
                     throw new RuntimeException(ex);
                 }
             }
+            try{
+
+                // send request to server
+                GameMessage gameMessage = new GameMessage();
+                gameMessage.userID = clientConnection.clientID;
+                gameMessage.opponent = clientConnection.opponent;
+                gameMessage.operationInfo = "deploy";
+                clientConnection.send(gameMessage);
+            }
+            catch (Exception exp) {
+                throw new RuntimeException();
+            }
         });
         back.setOnAction(e -> {
             try {

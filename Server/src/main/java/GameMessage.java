@@ -17,9 +17,9 @@ public class GameMessage implements Serializable {
      */
     boolean userWon = false;
     /**
-     * returns true if user successfully connects with valid username
+     * returns true if user successfully paired with an opponent username
      */
-    boolean loggedIn = false;
+    boolean opponentMatched = false;
     /**
      * returns message from user
      */

@@ -41,6 +41,14 @@ public class SearchingForPlayerController {
                 BorderPane temp = loader.load();
                 SnapToGridController ctr = loader.getController();
                 ctr.clientConnection = clientConnection;
+
+                // send request to server
+                GameMessage gameMessage = new GameMessage();
+                gameMessage.userID = clientConnection.clientID;
+                gameMessage.opponent = clientConnection.opponent;
+                gameMessage.operationInfo = "backToBase";
+                clientConnection.send(gameMessage);
+
                 rootSearch.getScene().setRoot(temp);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);

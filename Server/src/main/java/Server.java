@@ -113,6 +113,28 @@ public class Server{
                 }
             }
         }
+        public void processRequest(GameMessage clientRequest){
+            switch(clientRequest.operationInfo){
+                case "deploy":
+                    callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
+                    System.out.println("deploy");
+                    break;
+
+                case "backToBase":
+                    callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
+                    System.out.println("backToBase");
+                    break;
+
+                case "":
+                    callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
+                    System.out.println("null");
+                    break;
+
+                default:
+                    callback.accept(clientRequest.userID  + " : " + clientRequest.operationInfo + "is an invalid operation");
+                    System.out.println(clientRequest.userID  + " : " + clientRequest.operationInfo + "is an invalid operation");
+            }
+        }
 
         //todo: update clients moves
 
@@ -141,15 +163,15 @@ public class Server{
 
                     // if new client joins, add to clients online
                     if(clientGameMessage.newUser){
-                        listOfClientsID.add(clientGameMessage.userID);
-                        this.clientID = clientGameMessage.userID;
-                        callback.accept("adding " + clientGameMessage.userID + "to game base");
+
+                        listOfClientsID.add(clientGameMessage.userID);      // add clientThread to List
+                        this.clientID = clientGameMessage.userID;           // set clientName
+                        clientMap.put(this.clientID, this);                // map clientID to clientThread
+
+                        callback.accept("adding " + clientGameMessage.userID + " to game base");
                         System.out.println("adding " + clientGameMessage.userID);
 
-                        // todo: add to clientMap
-                        // todo: Should we notify Client A that Client B has joined party?
                         GameMessage newGameMessage = new GameMessage();
-                        newGameMessage.MessageInfo = clientID + " joined chat";
                         newGameMessage.userID = clientID;
                         newGameMessage.newUser = true;
 
@@ -157,26 +179,40 @@ public class Server{
                             newGameMessage.userNames = new HashSet<>(listOfClientsID);
                         }
                         if(clientID != null) {
-                            updateClients(newGameMessage);  // todo: update this to notify only opponent
+                            updateClients(newGameMessage);  // update usernames on client side
                         }
                     }
                     else{
                         // todo: listening for client request
                         // todo: if client request is "deploy" add thread to queue
-                        // Update server && clients with the received message
-                        callback.accept("client: " + clientID + " sent: " + clientGameMessage.MessageInfo);
-                        System.out.println("Sending message to: "+ clientGameMessage.recipient);
 
+                        // you can skip block
+                        {   //  ***************************     debugging     **************************
 
-                        clientGameMessage.MessageInfo = clientID + " said: " + clientGameMessage.MessageInfo;
-                        clientGameMessage.userID = clientID;
-                        //todo: here i update userNames
+                            // Update server && clients with the received message
+                            if(clientGameMessage.opponentMatched){
+                                callback.accept("Sending GameInfo from player" +  clientID + " to player : "+ clientGameMessage.opponent);
+                                System.out.println("Sending GameInfo from player" +  clientID + " to player : "+ clientGameMessage.opponent);
+                            }
 
-                        synchronized (listOfClientsID) {
-                            clientGameMessage.userNames = new HashSet<>(listOfClientsID);
+                            clientGameMessage.userID = clientID;
+
+                            //todo: here i update userNames
+                            synchronized (listOfClientsID) {
+                                clientGameMessage.userNames = new HashSet<>(listOfClientsID);
+                            }
+                            if(clientID != null){
+                                updateClients(clientGameMessage);   // for some reason lets keep updating client usernames
+                            }
+
                         }
-                        if(clientID != null){
-                            updateClients(clientGameMessage);
+
+                        //  ***************************     debugging     **************************
+
+
+                        // ****************************** process client request ******************************
+                        if(!Objects.equals(clientGameMessage.operationInfo,"")){
+                            processRequest(clientGameMessage);
                         }
                     }
 
