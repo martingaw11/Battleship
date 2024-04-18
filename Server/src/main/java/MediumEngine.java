@@ -8,13 +8,14 @@ public class MediumEngine implements Engine {
     /*
         MEDIUM ENGINE AI ALGORITHM
         --------------------------
-        The Medium Engine is an improved implementation of the Engine interface.
+        The Medium Engine is an improved version of the Easy Engine implementation.
         Improvements to the algorithm for picking spots to shoot in Battleship include:
         1) Taking Advantage of Known Parity
             -- The minimum piece size in Battleship is 2, we can recognize that we can
                forget about half the options on the board when shooting randomly. If we
                only ever shoot at "even" squares (same goes to shooting only "odd" squares)
                then we are guaranteed to hit each ship at least once, which leads to...
+
         2) Targeting a Ship that has been Hit
             -- The player has the privilege of knowing whether they hit a piece or not,
                so the AI Algorithm should get the same privilege. With this knowledge,
@@ -32,9 +33,6 @@ public class MediumEngine implements Engine {
 
     // last move engine made
     Pair<Integer, Integer> lastMoveMade;
-
-    // did engine last move hit
-    boolean wasHit;
 
     /**
      * Constructor of MediumEngine Object for Medium AI Algorithm
@@ -59,11 +57,8 @@ public class MediumEngine implements Engine {
      */
     @Override
     public Pair<Integer, Integer> makeMove(GameInfo info) {
-        // extract data needed for engine's next move
-        wasHit = info.shipHit;
-
         // if hit a ship, mark spot as hit and add valid neighboring cells not shot at to the possible move stack
-        if (wasHit) {
+        if (info.shipHit) {
             targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 2);
             prepareShots(lastMoveMade);
         }
