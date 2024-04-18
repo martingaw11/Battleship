@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.paint.Color?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #11161A;" stylesheets="@../stylesheets/gameStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameController">
+<BorderPane fx:id="rootGame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #11161A;" stylesheets="@../stylesheets/gameStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameController">
    <left>
       <Pane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
             <Pane fx:id="userPane" layoutX="50.0" layoutY="150.0" prefHeight="400.0" prefWidth="400.0">
                <children>
-                  <GridPane fx:id="userGrid" gridLinesVisible="true" layoutX="0.5" layoutY="0.5" prefHeight="400.0" prefWidth="400.0" style="-fx-border-color: cyan;" stylesheets="@../stylesheets/gameStyle.css">
+                  <GridPane fx:id="userGrid" gridLinesVisible="true" layoutX="0.5" layoutY="0.5" prefHeight="400.0" prefWidth="400.0" stylesheets="@../stylesheets/gameStyle.css">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -45,12 +48,30 @@
       </Pane>
    </left>
    <center>
-      <Pane prefHeight="700.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="700.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="forfeit" layoutX="26.0" layoutY="620.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="148.0" text="Surrender">
+               <effect>
+                  <DropShadow height="30.0" radius="14.5" spread="0.6" width="30.0">
+                     <color>
+                        <Color red="1.0" green="0.3764705955982208" blue="0.3450980484485626" />
+                     </color>
+                     <input>
+                        <InnerShadow choke="0.6">
+                           <color>
+                              <Color red="1.0" green="0.3764705955982208" blue="0.3450980484485626" />
+                           </color>
+                        </InnerShadow>
+                     </input>
+                  </DropShadow>
+               </effect>
+            </Button>
+         </children></Pane>
    </center>
    <right>
       <Pane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane fx:id="enemyGrid" layoutX="50.0" layoutY="150.0" prefHeight="400.0" prefWidth="400.0" style="-fx-border-color: cyan;" stylesheets="@../stylesheets/gameStyle.css">
+            <GridPane fx:id="enemyGrid" layoutX="50.0" layoutY="150.0" prefHeight="400.0" prefWidth="400.0" stylesheets="@../stylesheets/gameStyle.css">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

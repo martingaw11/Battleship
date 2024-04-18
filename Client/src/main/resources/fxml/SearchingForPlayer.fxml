@@ -130,7 +130,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <TextField fx:id="playerSearch" alignment="CENTER" layoutX="288.0" layoutY="563.0" prefHeight="56.0" prefWidth="625.0" style="-fx-background-color: null; -fx-text-fill: cyan;" text="Searching for player...">
+            <TextField fx:id="playerSearch" alignment="CENTER" editable="false" layoutX="288.0" layoutY="563.0" prefHeight="56.0" prefWidth="625.0" style="-fx-background-color: null; -fx-text-fill: cyan;" text="Searching for player...">
                <font>
                   <Font name="Verdana" size="30.0" />
                </font>

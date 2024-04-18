@@ -41,7 +41,8 @@ public class MainMenuController {
             Parent temp = loader.load();
             SnapToGridController ctr = loader.getController();
             ctr.clientConnection = clientConnection;
-            ctr.difficulty = x;
+            clientConnection.difficulty = x;
+            ctr.userDisplay.setText(clientConnection.clientID);
             root.getScene().setRoot(temp);
         } catch (IOException ex) {
             throw new RuntimeException(ex);

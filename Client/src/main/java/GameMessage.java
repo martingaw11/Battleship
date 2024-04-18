@@ -56,4 +56,11 @@ public class GameMessage implements Serializable {
      * returns recipient of message
      */
     String recipient;  // may keep this for mega chat hub
+    /**
+     * 0 if easy AI
+     * 1 if medium AI
+     * 2 if hard AI
+     * 3 if vs. Player
+     */
+    int difficulty;
 }

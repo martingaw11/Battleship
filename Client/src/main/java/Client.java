@@ -23,6 +23,13 @@ public class Client extends Thread{
 
 	GameMessage ReceivedMessage;
 
+	// Will be:
+	// 0 if Easy AI
+	// 1 if Medium AI
+	// 2 if Hard AI
+	// 3 if vs. Player
+	int difficulty;
+
 	private Consumer<Serializable> callback;
 
 	Client(Consumer<Serializable> call){

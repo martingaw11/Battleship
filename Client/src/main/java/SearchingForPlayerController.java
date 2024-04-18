@@ -46,6 +46,7 @@ public class SearchingForPlayerController {
                 GameMessage gameMessage = new GameMessage();
                 gameMessage.userID = clientConnection.clientID;
                 gameMessage.opponent = clientConnection.opponent;
+                gameMessage.difficulty = clientConnection.difficulty;
                 gameMessage.operationInfo = "backToBase";
                 clientConnection.send(gameMessage);
 

@@ -2,6 +2,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -27,6 +28,9 @@ public class SnapToGridController {
     @FXML
     Button resetButton, shuffleButton, deployFleet, back;
 
+    @FXML
+    TextField userDisplay;
+
     Client clientConnection;
 
     private int size = 400;
@@ -37,7 +41,6 @@ public class SnapToGridController {
     private Rectangle[][] grid;
     private boolean rotateMode = false;
     private int count = 0;
-    int difficulty;
 
     @FXML
     public void initialize() {
@@ -106,7 +109,7 @@ public class SnapToGridController {
             deployFleet.setDisable(false);
         });
         deployFleet.setOnAction(e -> {
-            if (difficulty == 3) {
+            if (clientConnection.difficulty == 3) {
                 try {
                     FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/SearchingForPlayer.fxml")));
                     BorderPane temp = loader.load();
@@ -136,6 +139,7 @@ public class SnapToGridController {
                 GameMessage gameMessage = new GameMessage();
                 gameMessage.userID = clientConnection.clientID;
                 gameMessage.opponent = clientConnection.opponent;
+                gameMessage.difficulty = clientConnection.difficulty;
                 gameMessage.operationInfo = "deploy";
                 clientConnection.send(gameMessage);
             }
