@@ -32,3 +32,24 @@
 #forfeit Text {
     -fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
 }
+#makeMove{
+    -fx-background-color: #11161A;
+    -fx-font-weight: bold;
+    -fx-background-radius: 50em;
+    -fx-font-size: 25;
+    -fx-font-family: "Verdana";
+    -fx-border-color: null;
+    -fx-text-fill: linear-gradient(navajowhite, #d0d0d0);
+}
+#makeMove:hover {
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #50C878 0%, #228B22 100%),
+            #32CD32,
+            #00A36C,
+            radial-gradient(center 50% 50%, radius 100%, #4CBB17, #0FFF50);
+    -fx-text-fill: linear-gradient(#FF4433, #FF2400);
+}
+#makeMove:pressed {
+    -fx-padding: 10 15 13 15;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+}

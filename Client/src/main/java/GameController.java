@@ -33,7 +33,7 @@ public class GameController {
     BorderPane rootGame;
 
     @FXML
-    Button forfeit;
+    Button forfeit, makeMove;
 
     Pair<Integer, Integer> position =  null;
 
