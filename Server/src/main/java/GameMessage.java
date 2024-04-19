@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 
 public class GameMessage implements Serializable {
@@ -8,6 +9,10 @@ public class GameMessage implements Serializable {
      * returns true if user is new to server
      */
     boolean newUser = false;
+    /**
+     * returns true if user starts game round in player VS player mode
+     */
+    boolean makeFirstMove = false;
     /**
      * returns true if game is over
      */
@@ -44,7 +49,7 @@ public class GameMessage implements Serializable {
      * returns AI's message to user
      */
     String AI_Chat_Message = "";
-    ArrayList<ArrayList<Integer>> gameBoard;
+    HashMap<String, ArrayList<ArrayList<Integer>>> gameBoard;
     GameInfo gameMove;
 
     /**

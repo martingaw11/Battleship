@@ -141,6 +141,7 @@ public class SnapToGridController {
                 gameMessage.opponent = clientConnection.opponent;
                 gameMessage.difficulty = clientConnection.difficulty;
                 gameMessage.operationInfo = "deploy";
+                // todo: i need the gameBoard set by player sent
                 clientConnection.send(gameMessage);
             }
             catch (Exception exp) {
@@ -335,6 +336,7 @@ public class SnapToGridController {
         p.draw();
     }
 
+    //todo: when is this sent? Can this be sent user selects deploy?
     public HashMap<String, ArrayList<Pair<Integer, Integer>>> toSend(){
         HashMap<String, ArrayList<Pair<Integer, Integer>>> toReturn = new HashMap<>();
         for(Piece toStore : boatList.keySet()){

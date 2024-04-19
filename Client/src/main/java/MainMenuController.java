@@ -41,7 +41,7 @@ public class MainMenuController {
             Parent temp = loader.load();
             SnapToGridController ctr = loader.getController();
             ctr.clientConnection = clientConnection;
-            clientConnection.difficulty = x;
+            clientConnection.difficulty = x;        // set engine mode
             ctr.userDisplay.setText(clientConnection.clientID);
             root.getScene().setRoot(temp);
         } catch (IOException ex) {

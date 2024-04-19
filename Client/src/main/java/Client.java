@@ -12,10 +12,8 @@ public class Client extends Thread{
 
 
 	Socket socketClient;
-
-	// todo: clientID
 	String clientID;
-	String opponent;  // todo set after user is matched
+	String opponent;
 
 	Set<String> userNames = new HashSet<>();
 	ObjectOutputStream out;
@@ -51,7 +49,7 @@ public class Client extends Thread{
 		while(true) {
 
 			try {
-				//todo: update clients did something
+				// clients receives message
 			ReceivedMessage = (GameMessage)in.readObject();
 
 			callback.accept(ReceivedMessage);
@@ -63,7 +61,7 @@ public class Client extends Thread{
 
     }
 
-	//todo:  clients sends a message
+	// clients sends a message
 	public void send(GameMessage newMessage) {
 
 		try {

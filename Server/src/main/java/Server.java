@@ -90,11 +90,14 @@ public class Server{
 
         Socket connection;
         int count;
-
         String clientID;
         String opponent;
         ObjectInputStream in;
         ObjectOutputStream out;
+        boolean makeFirstMove = false;
+        HashMap<String,ArrayList<ArrayList<Integer>>> myGameBoard;
+
+        Engine gameEngine;     // ai version for Player VS AI mode
 
         ClientThread(Socket s, int count){
             this.connection = s;
@@ -126,7 +129,23 @@ public class Server{
             switch(clientRequest.operationInfo){
                 case "deploy":
                     callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
-                    if(clientRequest.difficulty == 3){ deploy();}       // player vs player
+                    // player vs player
+                    if(clientRequest.difficulty == 3){
+                        deploy();
+                    }
+                    else{
+                        if(clientRequest.difficulty == 0){
+                            gameEngine = new EasyEngine();
+                        } else if (clientRequest.difficulty == 1) {
+                            gameEngine = new MediumEngine();
+                        }else if(clientRequest.difficulty == 2) {
+                            gameEngine = new HardEngine();
+                        }
+                        this.makeFirstMove = true;      // player always starts VS AI
+                        callback.accept(clientRequest.userID +" is playing against Engine" + clientRequest.difficulty);
+
+                    }
+                    this.myGameBoard = clientRequest.gameBoard; // set player's gameBoard
                     System.out.println("deploy");
                     break;
 
@@ -155,13 +174,14 @@ public class Server{
 
                 gameQueue.add(this);
 
-                if(gameQueue.size() % 2 == 0){
+                if(gameQueue.size() > 1){
                     try{
                         ClientThread c1 = gameQueue.remove();
                         ClientThread c2 = gameQueue.remove();
 
                         // set opponents for c1 and c2
                         c1.opponent = c2.clientID;
+                        c1.makeFirstMove = true;      // player c1 starts game round    // todo: may not be needed in client Thread
                         c2.opponent = c1.clientID;
 
                         // server notification
@@ -174,6 +194,7 @@ public class Server{
                         gameMessage1.userID = c1.clientID;
                         gameMessage1.opponent = c1.opponent;
                         gameMessage1.opponentMatched = true;
+                        gameMessage1.makeFirstMove = true;  // player starts game round
                         updateOneClient(gameMessage1, c1);
 
                         GameMessage gameMessage2 = new GameMessage();   // send to c2
@@ -188,7 +209,7 @@ public class Server{
                     }
                 }
                 else{
-                    callback.accept(this.clientID + "fleet deployed");
+                    callback.accept(this.clientID + " fleet deployed");
                     callback.accept("stand by for opponent");
                 }
 
@@ -290,7 +311,6 @@ public class Server{
                             processRequest(clientGameMessage);
                         }
                     }
-
 
 
                 }
