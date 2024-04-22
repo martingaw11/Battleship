@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
@@ -93,79 +94,6 @@
          </children>
       </Pane>
    </left>
-   <center>
-      <Pane prefHeight="700.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="forfeit" layoutX="26.0" layoutY="71.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="148.0" text="Surrender">
-               <effect>
-                  <DropShadow height="30.0" radius="14.5" spread="0.6" width="30.0">
-                     <color>
-                        <Color red="1.0" green="0.3764705955982208" blue="0.3450980484485626" />
-                     </color>
-                     <input>
-                        <InnerShadow choke="0.6">
-                           <color>
-                              <Color red="1.0" green="0.3764705955982208" blue="0.3450980484485626" />
-                           </color>
-                        </InnerShadow>
-                     </input>
-                  </DropShadow>
-               </effect>
-            </Button>
-            <Button fx:id="makeMove" layoutX="10.0" layoutY="144.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="181.0" text="Fire!" textFill="WHITE">
-               <effect>
-                  <DropShadow height="30.0" radius="14.5" spread="0.6" width="30.0">
-                     <color>
-                        <Color red="0.10196078568696976" green="0.8392156958580017" blue="0.4627451002597809" />
-                     </color>
-                     <input>
-                        <InnerShadow choke="0.6">
-                           <color>
-                              <Color red="0.10196078568696976" green="0.8392156958580017" blue="0.4627451002597809" />
-                           </color>
-                        </InnerShadow>
-                     </input>
-                  </DropShadow>
-               </effect>
-            </Button>
-            <Button fx:id="confirmButton" focusTraversable="false" layoutX="26.0" layoutY="7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" stylesheets="@../stylesheets/menuButtons.css" text="Yes" visible="false">
-               <font>
-                  <Font size="23.0" />
-               </font>
-               <effect>
-                  <DropShadow spread="0.6">
-                     <color>
-                        <Color red="1.0" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Button>
-            <Button fx:id="denyButton" focusTraversable="false" layoutX="101.0" layoutY="7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" stylesheets="@../stylesheets/menuButtons.css" text="No" visible="false">
-               <font>
-                  <Font size="23.0" />
-               </font>
-               <effect>
-                  <DropShadow spread="0.6">
-                     <color>
-                        <Color green="0.501960813999176" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Button>
-            <Text fx:id="hitMiss" fill="TRANSPARENT" layoutX="53.0" layoutY="371.0" opacity="0.0" stroke="AQUA" strokeType="OUTSIDE" strokeWidth="2.0" text="HIT" textAlignment="CENTER">
-               <font>
-                  <Font name="Verdana" size="54.0" />
-               </font>
-               <effect>
-                  <DropShadow spread="0.3">
-                     <color>
-                        <Color green="1.0" blue="1.0" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Text>
-         </children></Pane>
-   </center>
    <right>
       <Pane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
@@ -393,6 +321,82 @@
                   </DropShadow>
                </effect>
             </Text>
+            <Pane layoutX="-200.0" prefHeight="700.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="forfeit" layoutX="26.0" layoutY="71.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="148.0" text="Surrender">
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.6" width="30.0">
+                           <color>
+                              <Color red="1.0" green="0.3764705955982208" blue="0.3450980484485626" />
+                           </color>
+                           <input>
+                              <InnerShadow choke="0.6">
+                                 <color>
+                                    <Color red="1.0" green="0.3764705955982208" blue="0.3450980484485626" />
+                                 </color>
+                              </InnerShadow>
+                           </input>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Button fx:id="makeMove" layoutX="10.0" layoutY="144.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="181.0" text="Fire!" textFill="WHITE">
+                     <effect>
+                        <DropShadow height="30.0" radius="14.5" spread="0.6" width="30.0">
+                           <color>
+                              <Color red="0.10196078568696976" green="0.8392156958580017" blue="0.4627451002597809" />
+                           </color>
+                           <input>
+                              <InnerShadow choke="0.6">
+                                 <color>
+                                    <Color red="0.10196078568696976" green="0.8392156958580017" blue="0.4627451002597809" />
+                                 </color>
+                              </InnerShadow>
+                           </input>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Button fx:id="confirmButton" focusTraversable="false" layoutX="26.0" layoutY="7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" stylesheets="@../stylesheets/menuButtons.css" text="Yes" visible="false">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <effect>
+                        <DropShadow spread="0.6">
+                           <color>
+                              <Color red="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Button fx:id="denyButton" focusTraversable="false" layoutX="101.0" layoutY="7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" stylesheets="@../stylesheets/menuButtons.css" text="No" visible="false">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <effect>
+                        <DropShadow spread="0.6">
+                           <color>
+                              <Color green="0.501960813999176" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <HBox alignment="CENTER" layoutY="300.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Text fx:id="hitMiss" fill="TRANSPARENT" opacity="0.0" stroke="AQUA" strokeType="OUTSIDE" strokeWidth="2.0" text="HIT" textAlignment="CENTER">
+                           <font>
+                              <Font name="Verdana" size="54.0" />
+                           </font>
+                           <effect>
+                              <DropShadow spread="0.3">
+                                 <color>
+                                    <Color green="1.0" blue="1.0" />
+                                 </color>
+                              </DropShadow>
+                           </effect>
+                        </Text>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
          </children></Pane>
    </right>
 </BorderPane>
