@@ -157,9 +157,32 @@ public class Server{
                     System.out.println("backToBase");
                     break;
 
-                case "":
+                case "Fire":
                     callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
-                    System.out.println("null");
+                    // player vs player
+                    if(clientRequest.difficulty == 3){
+                        GameMessage gameMessage = clientRequest;
+                        // todo: note all messages from client must have difficulty, opponent and userId at least set
+                        updateOneClient(gameMessage, clientMap.get(clientRequest.opponent));
+
+                    }
+                    else{
+                            // process AI
+                    }
+                    break;
+
+                case "Response":
+                    callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
+                    // player vs player
+                    if(clientRequest.difficulty == 3){
+                        GameMessage gameMessage = clientRequest;
+                        // todo: note all messages from client must have difficulty, opponent and userId at least set
+                        updateOneClient(gameMessage, clientMap.get(clientRequest.opponent));
+
+                    }
+                    else{
+                        // process AI
+                    }
                     break;
 
                 default:
@@ -380,9 +403,3 @@ public class Server{
         }
     }
 }
-
-
-
-
-
-
