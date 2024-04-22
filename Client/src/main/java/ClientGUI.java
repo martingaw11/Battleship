@@ -42,19 +42,16 @@ public class ClientGUI extends Application {
                     throw new RuntimeException(ex);
                 }
             } else if (handledMessage.operationInfo.equals("Fire")) {
-                clientConnection.send(clientConnection.gameCtr.checkBoard(handledMessage.gameMove.moveMade));
+                Platform.runLater(() -> clientConnection.send(clientConnection.gameCtr.checkBoard(handledMessage.gameMove.moveMade)));
             } else if (handledMessage.operationInfo.equals("Response")) {
-                clientConnection.gameCtr.responseHandling(handledMessage);
+                Platform.runLater(() -> clientConnection.gameCtr.responseHandling(handledMessage));
             } else if (handledMessage.operationInfo.equals("AI Message")) {
                 // This is meant to enable the fire button after you get the AI message back when you respond to a fire.
                 // So like the server sends back an appropriate AI message after checking the response and that enables you to fire
-                clientConnection.gameCtr.aiTextHandling(true, handledMessage.AI_Chat_Message);
+                Platform.runLater(() -> clientConnection.gameCtr.aiTextHandling(true, handledMessage.AI_Chat_Message));
             } else if(handledMessage.newUser && clientConnection.clientID == null){
                 clientConnection.userNames.addAll(handledMessage.userNames);
             }
-            Platform.runLater(() ->{
-                System.out.println(handledMessage.userID);
-            });
         });
         clientConnection.start();
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -67,7 +64,7 @@ public class ClientGUI extends Application {
         goToGame.setOnFinished(e -> {
             clientConnection.searchingCtr = null;
             primaryStage.getScene().setRoot(tempRoot);
-            clientConnection.gameCtr.aiTextHandling(handledMessage.makeFirstMove, handledMessage.AI_Chat_Message);
+            Platform.runLater(() -> clientConnection.gameCtr.aiTextHandling(handledMessage.makeFirstMove, handledMessage.AI_Chat_Message));
         });
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/Username.fxml")));

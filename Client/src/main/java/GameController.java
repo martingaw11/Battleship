@@ -91,6 +91,8 @@ public class GameController {
             backToBase();
         });
 
+        hitMiss.toFront();
+
         forfeit.setOnAction(e -> {
             forfeit.disarm();
             confirmButton.setVisible(true);
@@ -104,7 +106,10 @@ public class GameController {
             surrenderMessage.opponent = clientConnection.opponent;
             surrenderMessage.operationInfo = "Response";
             clientConnection.send(surrenderMessage);
-            backToBase();
+            hitMiss.setText("YOU LOSE");
+            fade.play();
+            scale.play();
+            pause.play();
         });
         denyButton.setOnAction(e -> {
             forfeit.arm();
@@ -120,6 +125,7 @@ public class GameController {
             GameMessage fire = new GameMessage();
             fire.opponent = clientConnection.opponent;
             fire.operationInfo = "Fire";
+            fire.gameMove = new GameInfo();
             fire.gameMove.moveMade = position;
             clientConnection.send(fire);
             userTurn.setVisible(false);
@@ -168,6 +174,7 @@ public class GameController {
         GameMessage tempMessage = new GameMessage();
         tempMessage.opponent = clientConnection.opponent;
         tempMessage.operationInfo = "Response";
+        tempMessage.gameMove = new GameInfo();
         tempMessage.gameMove.moveMade = moveMade;
         tempMessage.gameMove.shipHit = false;
         tempMessage.gameMove.shipSunk = false;
