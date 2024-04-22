@@ -325,6 +325,8 @@ public class Server{
                     newGameMessage.userID = clientID;
                     newGameMessage.MessageInfo = "Client " + clientID + " has left the server!";
 
+                    //toDo inform opponent that the this thread surrendered
+
                     // Remove this client from the list of active clients
                     clients.remove(this);
                     listOfClientsID.remove(this.clientID);

@@ -53,7 +53,7 @@ public class GameController {
 
     ScaleTransition scale;
 
-    PauseTransition pause;
+    PauseTransition pause, pauseAI;
 
     ImageView crosshair = new ImageView("images/crosshair.png");
     Image explosion = new Image("images/explosion.png");
@@ -91,6 +91,15 @@ public class GameController {
             backToBase();
         });
 
+        pauseAI = new PauseTransition(Duration.seconds(2));
+        pauseAI.setOnFinished(e -> {
+            GameMessage aiFire = new GameMessage();
+            aiFire.difficulty = clientConnection.difficulty;
+            aiFire.userID = clientConnection.clientID;
+            aiFire.operationInfo = "AI Fire";
+            clientConnection.send(aiFire);
+        });
+
         hitMiss.toFront();
 
         forfeit.setOnAction(e -> {
@@ -123,6 +132,8 @@ public class GameController {
             }
             makeMove.setDisable(true);
             GameMessage fire = new GameMessage();
+            fire.userID = clientConnection.clientID;
+            fire.difficulty = clientConnection.difficulty;
             fire.opponent = clientConnection.opponent;
             fire.operationInfo = "Fire";
             fire.gameMove = new GameInfo();
@@ -172,6 +183,8 @@ public class GameController {
 
     public GameMessage checkBoard(Pair<Integer, Integer> moveMade) {
         GameMessage tempMessage = new GameMessage();
+        tempMessage.userID = clientConnection.clientID;
+        tempMessage.difficulty = clientConnection.difficulty;
         tempMessage.opponent = clientConnection.opponent;
         tempMessage.operationInfo = "Response";
         tempMessage.gameMove = new GameInfo();
@@ -267,6 +280,8 @@ public class GameController {
         }
         fade.play();
         scale.play();
+        if(clientConnection.difficulty != 3)
+            pauseAI.play();
     }
 
     public void backToBase(){
