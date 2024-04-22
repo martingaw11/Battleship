@@ -120,6 +120,8 @@ public class GameController {
             fire.operationInfo = "Fire";
             fire.gameMove.moveMade = position;
             clientConnection.send(fire);
+            userTurn.setVisible(false);
+            enemyTurn.setVisible(true);
         });
     }
 
