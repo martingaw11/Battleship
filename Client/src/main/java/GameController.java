@@ -63,6 +63,8 @@ public class GameController {
 
     private HashMap<String, Integer> shipSizeMap;
 
+    private int healthPoints = 17;
+
     @FXML
     public void initialize(){
         scale = new ScaleTransition();
@@ -186,14 +188,20 @@ public class GameController {
                         tempMessage.gameMove.shipSunk = true;
                         tempMessage.gameMove.currentShipHit = x;
                         tempMessage.gameMove.sizeOfShip = shipSizeMap.get(x);
-                        tempMessage.isOver = true;
-                        tempMessage.userWon = false;
-                        hitMiss.setText("YOU LOSE");
-                        pause.play();
                     }else{
                         hitMiss.setText("HIT");
                     }
                     tempMessage.gameMove.shipHit = true;
+                    healthPoints--;
+                    if(healthPoints == 0){
+                        tempMessage.isOver = true;
+                        tempMessage.userWon = false;
+                        hitMiss.setText("YOU LOSE");
+                        fade.play();
+                        scale.play();
+                        pause.play();
+                        return tempMessage;
+                    }
                     fade.play();
                     scale.play();
                     return tempMessage;
