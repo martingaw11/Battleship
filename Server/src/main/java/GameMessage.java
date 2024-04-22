@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +51,7 @@ public class GameMessage implements Serializable {
      * returns AI's message to user
      */
     String AI_Chat_Message = "";
-    HashMap<String, ArrayList<ArrayList<Integer>>> gameBoard;
+    HashMap<String, ArrayList<Pair<Integer, Integer>>> gameBoard;
     GameInfo gameMove;
 
     /**

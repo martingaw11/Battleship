@@ -7,9 +7,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import javafx.util.Pair;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.Set;
 
 public class SearchingForPlayerController {
     @FXML
@@ -25,6 +29,9 @@ public class SearchingForPlayerController {
     BorderPane rootSearch;
 
     Client clientConnection;
+
+    public Set<Piece> boatList;
+    public HashMap<String, ArrayList<Pair<Integer, Integer>>> boatPositions;
 
     @FXML
     public void initialize(){

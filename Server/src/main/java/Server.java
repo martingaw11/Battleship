@@ -1,3 +1,5 @@
+import javafx.util.Pair;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -95,7 +97,7 @@ public class Server{
         ObjectInputStream in;
         ObjectOutputStream out;
         boolean makeFirstMove = false;
-        HashMap<String,ArrayList<ArrayList<Integer>>> myGameBoard;
+        HashMap<String, ArrayList<Pair<Integer, Integer>>> myGameBoard;
 
         Engine gameEngine;     // ai version for Player VS AI mode
 

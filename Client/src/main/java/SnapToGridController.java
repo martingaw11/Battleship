@@ -42,6 +42,8 @@ public class SnapToGridController {
     private boolean rotateMode = false;
     private int count = 0;
 
+    private boolean isOnScene = true;
+
     @FXML
     public void initialize() {
         deployFleet.setDisable(true);
@@ -114,7 +116,10 @@ public class SnapToGridController {
                     FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/SearchingForPlayer.fxml")));
                     BorderPane temp = loader.load();
                     SearchingForPlayerController ctr = loader.getController();
+                    clientConnection.searchingCtr = ctr;
                     ctr.clientConnection = clientConnection;
+                    ctr.boatList = boatList.keySet();
+                    ctr.boatPositions = toSend();
                     root.getScene().setRoot(temp);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -124,10 +129,11 @@ public class SnapToGridController {
                     FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/Game.fxml")));
                     BorderPane temp = loader.load();
                     GameController ctr = loader.getController();
+                    clientConnection.gameCtr = ctr;
                     ctr.clientConnection = clientConnection;
-                    ctr.boatList = Set.copyOf(boatList.keySet());
+                    ctr.boatList = boatList.keySet();
                     ctr.boatPositions = toSend();
-                    ctr.drawUser();
+                    ctr.drawUser(true);
                     root.getScene().setRoot(temp);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -141,7 +147,11 @@ public class SnapToGridController {
                 gameMessage.opponent = clientConnection.opponent;
                 gameMessage.difficulty = clientConnection.difficulty;
                 gameMessage.operationInfo = "deploy";
-                // todo: i need the gameBoard set by player sent
+                if (clientConnection.difficulty != 3) {
+                    isOnScene = false;
+                    shuffleButton.fire();
+                    gameMessage.gameBoard = toSend();
+                }
                 clientConnection.send(gameMessage);
             }
             catch (Exception exp) {
@@ -265,7 +275,9 @@ public class SnapToGridController {
         p.setRotate(false);
         p.setGridX(-1);
         p.setGridY(-1);
-        p.draw();
+        if (isOnScene) {
+            p.draw();
+        }
         count--;
         if(count != 5)
             deployFleet.setDisable(true);
@@ -333,7 +345,9 @@ public class SnapToGridController {
         p.setY(squareSize * gridy);
         p.setGridX(gridx);
         p.setGridY(gridy);
-        p.draw();
+        if (isOnScene) {
+            p.draw();
+        }
     }
 
     //todo: when is this sent? Can this be sent user selects deploy?

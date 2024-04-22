@@ -4,6 +4,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -11,6 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="rootGame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #11161A;" stylesheets="@../stylesheets/gameStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameController">
    <left>
@@ -46,7 +49,7 @@
                   </GridPane>
                </children>
             </Pane>
-            <TextField fx:id="userFleet" alignment="CENTER" layoutX="49.0" layoutY="92.0" prefHeight="55.0" prefWidth="402.0" style="-fx-background-color: null; -fx-text-fill: white;" text="Your fleet:">
+            <TextField fx:id="userFleet" alignment="CENTER" editable="false" focusTraversable="false" layoutX="49.0" layoutY="92.0" prefHeight="55.0" prefWidth="402.0" style="-fx-background-color: null; -fx-text-fill: white;" text="Your fleet:">
                <font>
                   <Font name="Verdana" size="30.0" />
                </font>
@@ -58,13 +61,42 @@
                   </DropShadow>
                </effect>
             </TextField>
+            <ImageView fitHeight="192.0" fitWidth="673.0" layoutX="-19.0" layoutY="536.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/TronBot.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="AIText" fill="AQUA" layoutX="176.0" layoutY="626.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Tron Battleship!">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="userTurn" fill="#1ad676" layoutX="144.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="It's your turn" visible="false">
+               <font>
+                  <Font name="Verdana" size="32.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color red="0.10196078568696976" green="0.8392156958580017" blue="0.4627451002597809" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
          </children>
       </Pane>
    </left>
    <center>
       <Pane prefHeight="700.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="forfeit" layoutX="26.0" layoutY="620.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="148.0" text="Surrender">
+            <Button fx:id="forfeit" layoutX="26.0" layoutY="71.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="148.0" text="Surrender">
                <effect>
                   <DropShadow height="30.0" radius="14.5" spread="0.6" width="30.0">
                      <color>
@@ -80,7 +112,7 @@
                   </DropShadow>
                </effect>
             </Button>
-            <Button fx:id="makeMove" layoutX="10.0" layoutY="508.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="181.0" text="Fire!" textFill="WHITE">
+            <Button fx:id="makeMove" layoutX="10.0" layoutY="144.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="181.0" text="Fire!" textFill="WHITE">
                <effect>
                   <DropShadow height="30.0" radius="14.5" spread="0.6" width="30.0">
                      <color>
@@ -96,6 +128,42 @@
                   </DropShadow>
                </effect>
             </Button>
+            <Button fx:id="confirmButton" focusTraversable="false" layoutX="26.0" layoutY="7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" stylesheets="@../stylesheets/menuButtons.css" text="Yes" visible="false">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.6">
+                     <color>
+                        <Color red="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+            <Button fx:id="denyButton" focusTraversable="false" layoutX="101.0" layoutY="7.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="67.0" stylesheets="@../stylesheets/menuButtons.css" text="No" visible="false">
+               <font>
+                  <Font size="23.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.6">
+                     <color>
+                        <Color green="0.501960813999176" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Button>
+            <Text fx:id="hitMiss" fill="TRANSPARENT" layoutX="53.0" layoutY="371.0" opacity="0.0" stroke="AQUA" strokeType="OUTSIDE" strokeWidth="2.0" text="HIT" textAlignment="CENTER">
+               <font>
+                  <Font name="Verdana" size="54.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
          </children></Pane>
    </center>
    <right>
@@ -229,7 +297,7 @@
                    <Button mnemonicParsing="false" onAction="#buttonHandler" prefHeight="40.0" prefWidth="40.0" GridPane.columnIndex="9" GridPane.rowIndex="9" />
                </children>
             </GridPane>
-            <TextField fx:id="enemyFleet" alignment="CENTER" layoutX="49.0" layoutY="92.0" prefHeight="55.0" prefWidth="402.0" style="-fx-background-color: null; -fx-text-fill: white;" text="Enemy fleet:">
+            <TextField fx:id="enemyFleet" alignment="CENTER" editable="false" focusTraversable="false" layoutX="49.0" layoutY="92.0" prefHeight="55.0" prefWidth="402.0" style="-fx-background-color: null; -fx-text-fill: white;" text="Enemy fleet:">
                <font>
                   <Font name="Verdana" size="30.0" />
                </font>
@@ -241,6 +309,90 @@
                   </DropShadow>
                </effect>
             </TextField>
+            <Text fill="AQUA" layoutX="-31.0" layoutY="628.0" rotate="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Graveyard">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="carrier" fill="AQUA" layoutX="81.0" layoutY="588.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Aircraft Carrier">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="battleship" fill="AQUA" layoutX="106.0" layoutY="628.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Battleship">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="cruiser" fill="AQUA" layoutX="120.0" layoutY="667.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cruiser">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="submarine" fill="AQUA" layoutX="307.0" layoutY="601.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Submarine">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="destroyer" fill="AQUA" layoutX="312.0" layoutY="641.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destroyer">
+               <font>
+                  <Font name="Verdana" size="20.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
+            <Text fx:id="enemyTurn" fill="#ff6058" layoutX="81.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="It's the enemy's turn" visible="false">
+               <font>
+                  <Font name="Verdana" size="32.0" />
+               </font>
+               <effect>
+                  <DropShadow spread="0.3">
+                     <color>
+                        <Color red="1.0" green="0.3764705955982208" blue="0.3450980484485626" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Text>
          </children></Pane>
    </right>
 </BorderPane>

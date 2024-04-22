@@ -1,24 +1,59 @@
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class ClientGUI extends Application {
     Client clientConnection;
+
+    PauseTransition goToGame = new PauseTransition(Duration.seconds(1));
+
+    GameMessage handledMessage;
+
+    BorderPane tempRoot;
     @Override
     public void start(Stage primaryStage) {
         clientConnection = new Client(data->{
-            if(((GameMessage)data).newUser && clientConnection.clientID == null){
-                clientConnection.userNames.addAll(((GameMessage)data).userNames);
+            handledMessage = (GameMessage)data;
+            if(handledMessage.opponentMatched){
+                clientConnection.opponent = handledMessage.opponent;
+                try {
+                    FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/Game.fxml")));
+                    tempRoot = loader.load();
+                    GameController ctr = loader.getController();
+                    ctr.clientConnection = clientConnection;
+                    ctr.boatList = clientConnection.searchingCtr.boatList;
+                    ctr.boatPositions = clientConnection.searchingCtr.boatPositions;
+                    ctr.drawUser(handledMessage.makeFirstMove);
+                    clientConnection.gameCtr = ctr;
+                    clientConnection.searchingCtr.playerSearch.setText("Opponent found: " + handledMessage.opponent);
+                    goToGame.play();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            } else if (handledMessage.operationInfo.equals("Fire")) {
+                clientConnection.send(clientConnection.gameCtr.checkBoard(handledMessage.gameMove.moveMade));
+            } else if (handledMessage.operationInfo.equals("Response")) {
+                clientConnection.gameCtr.responseHandling(handledMessage);
+            } else if (handledMessage.operationInfo.equals("AI Message")) {
+                // This is meant to enable the fire button after you get the AI message back when you respond to a fire.
+                // So like the server sends back an appropriate AI message after checking the response and that enables you to fire
+                clientConnection.gameCtr.aiTextHandling(true, handledMessage.AI_Chat_Message);
+            } else if(handledMessage.newUser && clientConnection.clientID == null){
+                clientConnection.userNames.addAll(handledMessage.userNames);
             }
             Platform.runLater(() ->{
-                System.out.println(((GameMessage) data).userID);
+                System.out.println(handledMessage.userID);
             });
         });
         clientConnection.start();
@@ -28,6 +63,11 @@ public class ClientGUI extends Application {
                 Platform.exit();
                 System.exit(0);
             }
+        });
+        goToGame.setOnFinished(e -> {
+            clientConnection.searchingCtr = null;
+            primaryStage.getScene().setRoot(tempRoot);
+            clientConnection.gameCtr.aiTextHandling(handledMessage.makeFirstMove, handledMessage.AI_Chat_Message);
         });
         try {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/Username.fxml")));

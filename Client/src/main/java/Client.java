@@ -20,6 +20,8 @@ public class Client extends Thread{
 	ObjectInputStream in;
 
 	GameMessage ReceivedMessage;
+	GameController gameCtr;
+	SearchingForPlayerController searchingCtr;
 
 	// Will be:
 	// 0 if Easy AI
