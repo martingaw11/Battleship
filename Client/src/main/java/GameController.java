@@ -112,7 +112,12 @@ public class GameController {
             GameMessage surrenderMessage = new GameMessage();
             surrenderMessage.isOver = true;
             surrenderMessage.userWon = false;
+            surrenderMessage.userID = clientConnection.clientID;
+            surrenderMessage.difficulty = clientConnection.difficulty;
             surrenderMessage.opponent = clientConnection.opponent;
+
+            System.out.println(clientConnection.opponent);
+
             surrenderMessage.operationInfo = "Response";
             clientConnection.send(surrenderMessage);
             hitMiss.setText("YOU LOSE");
@@ -244,7 +249,8 @@ public class GameController {
     }
 
     public void responseHandling(GameMessage response) {
-        aiTextHandling(false, response.AI_Chat_Message);
+        // todo: micah changed false to variable turn
+        aiTextHandling(response.turn, response.AI_Chat_Message);
         if(response.isOver){
             hitMiss.setText("YOU WIN");
             fade.play();

@@ -37,11 +37,7 @@ public class Server{
      */
     Queue<ClientThread> gameQueue = new ArrayDeque<>();
 
-    /**
-     *  ArrayList of GameThreads
-     */
-    ArrayList<GameThread> gamesInProgress = new ArrayList<>();
-
+    AIChatBot chatBot = new AIChatBot();
     /**
      *  The server
      */
@@ -97,7 +93,8 @@ public class Server{
         ObjectInputStream in;
         ObjectOutputStream out;
         boolean makeFirstMove = false;
-        HashMap<String, ArrayList<Pair<Integer, Integer>>> myGameBoard;
+        GameInfo lastGamePlay;
+        HashMap<String, ArrayList<Pair<Integer, Integer>>> myAIGameBoard;
 
         Engine gameEngine;     // ai version for Player VS AI mode
 
@@ -133,22 +130,11 @@ public class Server{
                     callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
                     // player vs player
                     if(clientRequest.difficulty == 3){
-                        deploy();
+                        deploy_PVP();
                     }
                     else{
-                        if(clientRequest.difficulty == 0){
-                            gameEngine = new EasyEngine();
-                        } else if (clientRequest.difficulty == 1) {
-                            gameEngine = new MediumEngine();
-                        }else if(clientRequest.difficulty == 2) {
-                            gameEngine = new HardEngine();
-                        }
-                        this.makeFirstMove = true;      // player always starts VS AI
-                        callback.accept(clientRequest.userID +" is playing against Engine" + clientRequest.difficulty);
-
+                        deploy_PVE(clientRequest);
                     }
-                    this.myGameBoard = clientRequest.gameBoard; // set player's gameBoard
-                    System.out.println("deploy");
                     break;
 
                 case "backToBase":
@@ -161,10 +147,7 @@ public class Server{
                     callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
                     // player vs player
                     if(clientRequest.difficulty == 3){
-                        GameMessage gameMessage = clientRequest;
-                        // todo: note all messages from client must have difficulty, opponent and userId at least set
-                        updateOneClient(gameMessage, clientMap.get(clientRequest.opponent));
-
+                        updateOneClient(clientRequest, clientMap.get(clientRequest.opponent));
                     }
                     else{
                             // process AI....
@@ -175,10 +158,9 @@ public class Server{
                     callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
                     // player vs player
                     if(clientRequest.difficulty == 3){
-                        GameMessage gameMessage = clientRequest;
                         // todo: note all messages from client must have difficulty, opponent and userId at least set
-                        updateOneClient(gameMessage, clientMap.get(clientRequest.opponent));
-
+                        // todo: opponent and client board updates wrongly
+                        response_PVP(clientRequest);
                     }
                     else{
                         // process AI
@@ -191,9 +173,39 @@ public class Server{
             }
         }
 
+        private String get_My_AI_Message(GameMessage gameMessage) {
+
+            // if shipSunk
+            if(gameMessage.gameMove.shipSunk){
+               return chatBot.getShipSunkMessage();
+            }
+            // if shipHit
+            else if(gameMessage.gameMove.shipHit){
+                return chatBot.getShipHitMessage();
+            }
+            // default is a Miss
+            return chatBot.getShipMissMessage();
+
+        }
+
+        private String get_opponent_AI_Message(GameMessage gameMessage) {
+
+            // if shipSunk
+            if(gameMessage.gameMove.shipSunk){
+                return chatBot.getOppSunkShipMessage();
+            }
+            // if shipHit
+            else if(gameMessage.gameMove.shipHit){
+                return chatBot.getOppHitShipMessage();
+            }
+            // default is a Miss
+            return chatBot.getOppMissShipMessage();
+
+        }
+
         // if player vs player mode -> add player to queue for opponent
         // if queue has a pair -> deque 2 players and match them together
-        public void deploy(){
+        public void deploy_PVP(){
 
             synchronized (gameQueue){
 
@@ -220,12 +232,17 @@ public class Server{
                         gameMessage1.opponent = c1.opponent;
                         gameMessage1.opponentMatched = true;
                         gameMessage1.makeFirstMove = true;  // player starts game round
+                        gameMessage1.AI_Chat_Message = chatBot.getStartMessage();       // get chatBot message
+                        gameMessage1.operationInfo = "Deployed";
                         updateOneClient(gameMessage1, c1);
 
                         GameMessage gameMessage2 = new GameMessage();   // send to c2
                         gameMessage2.userID = c2.clientID;
                         gameMessage2.opponent = c2.opponent;
                         gameMessage2.opponentMatched = true;
+                        gameMessage2.makeFirstMove = false;
+                        gameMessage2.AI_Chat_Message = chatBot.getStartMessage();
+                        gameMessage1.operationInfo = "Deployed";
                         updateOneClient(gameMessage2, c2);
 
                     }
@@ -238,6 +255,36 @@ public class Server{
                     callback.accept("stand by for opponent");
                 }
 
+            }
+        }
+        void deploy_PVE(GameMessage clientRequest){
+            this.makeFirstMove = true;      // player always starts VS AI
+            callback.accept(clientRequest.userID +" is playing against Engine" + clientRequest.difficulty);
+            GameMessage gameMessage = new GameMessage();
+            gameMessage.userID = this.clientID;
+            gameMessage.AI_Chat_Message = chatBot.getStartMessage();
+            gameMessage.operationInfo = "Deployed";
+            updateOneClient(gameMessage, this);
+            this.myAIGameBoard = clientRequest.gameBoard; // set AI's gameBoard
+            System.out.println("deploy");
+        }
+
+        void response_PVP(GameMessage clientRequest){
+            // if client surrenders send win message to opponent
+            if(clientRequest.isOver){
+                System.out.println(clientRequest.opponent + "won");
+                updateOneClient(clientRequest, clientMap.get(clientRequest.opponent));
+            }
+            else{
+                GameMessage myResponse = clientRequest;
+                myResponse.AI_Chat_Message = get_opponent_AI_Message(myResponse);
+                myResponse.turn = true;     // allow swapping of turns
+                updateOneClient(myResponse,this);    // Client who was firedAt
+
+                GameMessage opponentResponse = clientRequest;
+                opponentResponse.AI_Chat_Message = get_My_AI_Message(opponentResponse);
+                opponentResponse.turn = false;
+                updateOneClient(opponentResponse, clientMap.get(clientRequest.opponent));  // client who fired
             }
         }
 
@@ -323,7 +370,7 @@ public class Server{
                                 clientGameMessage.userNames = new HashSet<>(listOfClientsID);
                             }
                             if(clientID != null){
-                                updateClients(clientGameMessage);   // for some reason lets keep updating client usernames
+                                //updateClients(clientGameMessage);   // for some reason lets keep updating client usernames
                             }
 
                         }
@@ -389,17 +436,5 @@ public class Server{
 
     }//end of client thread
 
-    /**
-     * Thread listening for communication between two client playing against each other
-     */
-    class GameThread {
-        boolean versusPlayer = false;
-        ClientThread playerOne;
-        ClientThread playerTwo;
 
-        GameThread(ClientThread p1, ClientThread p2){
-            this.playerOne = p1;
-            this.playerTwo = p2;
-        }
-    }
 }

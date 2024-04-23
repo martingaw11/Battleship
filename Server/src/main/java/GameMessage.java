@@ -43,6 +43,11 @@ public class GameMessage implements Serializable {
     String userID = "";
 
     /**
+     * returns true is users turn
+     */
+    Boolean turn = false;
+
+    /**
      * returns opponent's unique userID
      */
     String opponent = "";

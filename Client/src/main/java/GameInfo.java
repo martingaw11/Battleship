@@ -1,8 +1,9 @@
 import javafx.util.Pair;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class GameInfo {
+public class GameInfo implements Serializable {
     /*
         GAME INFORMATION STRUCTURE
         --------------------------
@@ -15,11 +16,11 @@ public class GameInfo {
     /**
      * returns true if ship was hit
      */
-    boolean shipHit;
+    boolean shipHit = false;
     /**
      * returns true when a hit causes a ship to sink
      */
-    boolean shipSunk;
+    boolean shipSunk = false;
     /**
      * returns size of ship was hit
      */

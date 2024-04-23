@@ -25,6 +25,7 @@ public class ClientGUI extends Application {
     public void start(Stage primaryStage) {
         clientConnection = new Client(data->{
             handledMessage = (GameMessage)data;
+            // todo: how is pve start game handled
             if(handledMessage.opponentMatched){
                 clientConnection.opponent = handledMessage.opponent;
                 try {
@@ -43,7 +44,8 @@ public class ClientGUI extends Application {
                 }
             } else if (handledMessage.operationInfo.equals("Fire")) {
                 Platform.runLater(() -> clientConnection.send(clientConnection.gameCtr.checkBoard(handledMessage.gameMove.moveMade)));
-            } else if (handledMessage.operationInfo.equals("Response")) {
+            } else if (handledMessage.operationInfo.equals("Response")) {     //todo: we need to check if the message object was from the same client
+                                                                            // todo:  ifso update opponent side of the board
                 Platform.runLater(() -> clientConnection.gameCtr.responseHandling(handledMessage));
             } else if (handledMessage.operationInfo.equals("AI Message")) {
                 // This is meant to enable the fire button after you get the AI message back when you respond to a fire.
