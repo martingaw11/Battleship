@@ -29,7 +29,7 @@ public class MediumEngine implements Engine {
     ArrayList<ArrayList<Integer>> targetBoard;
 
     // if not empty (target mode activated), stack of all possible moves
-    Stack<Pair<Integer, Integer>> possibleMoves = new Stack<>();
+    Stack<Pair<Integer, Integer>> possibleMoves;
 
     // last move engine made
     // lastMoveMade is local to MediumEngine and HardEngine, therefore cannot be accessible from Engine Interface
@@ -46,6 +46,9 @@ public class MediumEngine implements Engine {
         for (int i = 0; i < 10; i++) {
             targetBoard.add(zeroRow);
         }
+
+        // empty initialization for possible move stack
+        possibleMoves = new Stack<>();
     }
 
     /**
@@ -58,8 +61,11 @@ public class MediumEngine implements Engine {
      */
     @Override
     public Pair<Integer, Integer> makeMove(GameInfo info) {
-        // update lastMoveMade from info
-        lastMoveMade = info.moveMade;
+        // if info is null, then first move needs to be made
+        if (info == null) {
+            lastMoveMade = parityGuess();
+            return lastMoveMade;
+        }
 
         // if hit a ship, mark spot as hit and add valid neighboring cells not shot at to the possible move stack
         if (info.shipHit) {

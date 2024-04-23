@@ -59,6 +59,9 @@ public class HardEngine implements Engine {
 
         // must initialize pieces left from largest to smallest
         piecesLeft = new ArrayList<>(Arrays.asList(5, 4, 3, 3, 2));
+
+        // empty initialization of possible move stack
+        possibleMoves = new Stack<>();
     }
 
     /**
@@ -71,8 +74,11 @@ public class HardEngine implements Engine {
      */
     @Override
     public Pair<Integer, Integer> makeMove(GameInfo info) {
-        // update lastMoveMade from info
-        lastMoveMade = info.moveMade;
+        // no game info feedback means first move needs to be made, default is bestGuess
+        if (info == null) {
+            lastMoveMade = calculateBestGuess();
+            return lastMoveMade;
+        }
 
         // if hit a ship, mark spot as hit and add valid neighboring cells not shot at to the possible move stack
         if (info.shipHit) {
