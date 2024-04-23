@@ -50,7 +50,7 @@ public class ClientGUI extends Application {
             } else if (handledMessage.operationInfo.equals("AI Message")) {
                 // This is meant to enable the fire button after you get the AI message back when you respond to a fire.
                 // So like the server sends back an appropriate AI message after checking the response and that enables you to fire
-                Platform.runLater(() -> clientConnection.gameCtr.aiTextHandling(true, handledMessage.AI_Chat_Message));
+                Platform.runLater(() -> clientConnection.gameCtr.aiTextHandling(handledMessage.turn, handledMessage.AI_Chat_Message));
             } else if(handledMessage.newUser && clientConnection.clientID == null){
                 clientConnection.userNames.addAll(handledMessage.userNames);
             }

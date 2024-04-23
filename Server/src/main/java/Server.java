@@ -278,11 +278,13 @@ public class Server{
             else{
                 GameMessage myResponse = clientRequest;
                 myResponse.AI_Chat_Message = get_opponent_AI_Message(myResponse);
+                myResponse.operationInfo = "AI Message";
                 myResponse.turn = true;     // allow swapping of turns
                 updateOneClient(myResponse,this);    // Client who was firedAt
 
                 GameMessage opponentResponse = clientRequest;
                 opponentResponse.AI_Chat_Message = get_My_AI_Message(opponentResponse);
+                opponentResponse.operationInfo = "Response";
                 opponentResponse.turn = false;
                 updateOneClient(opponentResponse, clientMap.get(clientRequest.opponent));  // client who fired
             }

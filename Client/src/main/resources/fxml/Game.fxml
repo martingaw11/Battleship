@@ -97,6 +97,22 @@
    <right>
       <Pane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
+            <HBox fx:id="missHitHbox" alignment="CENTER" layoutX="-263.0" layoutY="287.0" prefHeight="127.0" prefWidth="328.0">
+               <children>
+                  <Text fx:id="hitMiss" fill="TRANSPARENT" opacity="0.0" stroke="AQUA" strokeType="OUTSIDE" strokeWidth="2.0" text="HIT" textAlignment="CENTER">
+                     <font>
+                        <Font name="Verdana" size="54.0" />
+                     </font>
+                     <effect>
+                        <DropShadow spread="0.3">
+                           <color>
+                              <Color green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Text>
+               </children>
+            </HBox>
             <GridPane fx:id="enemyGrid" layoutX="50.0" layoutY="150.0" prefHeight="400.0" prefWidth="400.0" stylesheets="@../stylesheets/gameStyle.css">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -379,22 +395,6 @@
                         </DropShadow>
                      </effect>
                   </Button>
-                  <HBox alignment="CENTER" layoutY="300.0" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Text fx:id="hitMiss" fill="TRANSPARENT" opacity="0.0" stroke="AQUA" strokeType="OUTSIDE" strokeWidth="2.0" text="HIT" textAlignment="CENTER">
-                           <font>
-                              <Font name="Verdana" size="54.0" />
-                           </font>
-                           <effect>
-                              <DropShadow spread="0.3">
-                                 <color>
-                                    <Color green="1.0" blue="1.0" />
-                                 </color>
-                              </DropShadow>
-                           </effect>
-                        </Text>
-                     </children>
-                  </HBox>
                </children>
             </Pane>
          </children></Pane>

@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -49,6 +50,9 @@ public class GameController {
     @FXML
     Text userTurn, enemyTurn, carrier, battleship, submarine, cruiser, destroyer, hitMiss, AIText;
 
+    @FXML
+    HBox missHitHbox;
+
     FadeTransition fade;
 
     ScaleTransition scale;
@@ -65,6 +69,8 @@ public class GameController {
 
     private int healthPoints = 17;
 
+    private HashMap<String, Text> graveYard;
+
     @FXML
     public void initialize(){
         scale = new ScaleTransition();
@@ -75,6 +81,7 @@ public class GameController {
         scale.setByX(2.0);
         scale.setByY(2.0);
         scale.setCycleCount(2);
+        scale.setOnFinished(e -> missHitHbox.toBack());
 
         fade = new FadeTransition();
         fade.setNode(hitMiss);
@@ -100,8 +107,6 @@ public class GameController {
             clientConnection.send(aiFire);
         });
 
-        hitMiss.toFront();
-
         forfeit.setOnAction(e -> {
             forfeit.disarm();
             confirmButton.setVisible(true);
@@ -121,6 +126,7 @@ public class GameController {
             surrenderMessage.operationInfo = "Response";
             clientConnection.send(surrenderMessage);
             hitMiss.setText("YOU LOSE");
+            missHitHbox.toFront();
             fade.play();
             scale.play();
             pause.play();
@@ -151,6 +157,12 @@ public class GameController {
 
     public void drawUser(boolean firstMove){
         shipSizeMap = new HashMap<>();
+        graveYard = new HashMap<>();
+        graveYard.put("Aircraft Carrier", carrier);
+        graveYard.put("Battleship", battleship);
+        graveYard.put("Destroyer", destroyer);
+        graveYard.put("Submarine", submarine);
+        graveYard.put("Cruiser", cruiser);
         for(Piece x : boatList){
             userPane.getChildren().add(x.r);
             x.r.setDisable(true);
@@ -177,12 +189,12 @@ public class GameController {
     }
 
     public void buttonHandler(ActionEvent actionEvent){
-        if(currentPosition == null){
+        if(position == null){
             enemyGrid.getChildren().add(crosshair);
         }
         currentPosition = (Button)actionEvent.getSource();
-        position = new Pair<>(GridPane.getRowIndex(currentPosition), GridPane.getColumnIndex(currentPosition));
-        GridPane.setConstraints(crosshair, position.getValue(), position.getKey());
+        position = new Pair<>(GridPane.getColumnIndex(currentPosition), GridPane.getRowIndex(currentPosition));
+        GridPane.setConstraints(crosshair, position.getKey(), position.getValue());
         crosshair.toFront();
     }
 
@@ -204,7 +216,7 @@ public class GameController {
                 if(Objects.equals(y, moveMade)){
                     boatPositions.get(x).remove(y);
                     image = new ImageView("images/explosion.png");
-                    GridPane.setConstraints(image, moveMade.getValue(), moveMade.getKey());
+                    GridPane.setConstraints(image, moveMade.getKey(), moveMade.getValue());
                     image.setFitWidth(40);
                     image.setFitHeight(40);
                     userGrid.getChildren().add(image);
@@ -213,6 +225,7 @@ public class GameController {
                         tempMessage.gameMove.shipSunk = true;
                         tempMessage.gameMove.currentShipHit = x;
                         tempMessage.gameMove.sizeOfShip = shipSizeMap.get(x);
+                        hitMiss.setText("SHIP SUNK!");
                     }else{
                         hitMiss.setText("HIT");
                     }
@@ -222,11 +235,13 @@ public class GameController {
                         tempMessage.isOver = true;
                         tempMessage.userWon = false;
                         hitMiss.setText("YOU LOSE");
+                        missHitHbox.toFront();
                         fade.play();
                         scale.play();
                         pause.play();
                         return tempMessage;
                     }
+                    missHitHbox.toFront();
                     fade.play();
                     scale.play();
                     return tempMessage;
@@ -235,11 +250,12 @@ public class GameController {
         }
 
         hitMiss.setText("MISS");
+        missHitHbox.toFront();
         fade.play();
         scale.play();
 
         image = new ImageView("images/splash.png");
-        GridPane.setConstraints(image, moveMade.getValue(), moveMade.getKey());
+        GridPane.setConstraints(image, moveMade.getKey(), moveMade.getValue());
         image.setFitWidth(40);
         image.setFitHeight(40);
         userGrid.getChildren().add(image);
@@ -253,6 +269,7 @@ public class GameController {
         aiTextHandling(response.turn, response.AI_Chat_Message);
         if(response.isOver){
             hitMiss.setText("YOU WIN");
+            missHitHbox.toFront();
             fade.play();
             scale.play();
             pause.play();
@@ -265,25 +282,27 @@ public class GameController {
         ImageView image;
         if(response.gameMove.shipHit){
             image = new ImageView("images/explosion.png");
-            GridPane.setConstraints(image, response.gameMove.moveMade.getValue(), response.gameMove.moveMade.getKey());
+            GridPane.setConstraints(image, response.gameMove.moveMade.getKey(), response.gameMove.moveMade.getValue());
             image.setFitWidth(40);
             image.setFitHeight(40);
             enemyGrid.getChildren().add(image);
             image.toFront();
             if(response.gameMove.shipSunk){
-                hitMiss.setText(response.gameMove.currentShipHit + " SUNK!");
+                hitMiss.setText("SHIP SUNK!");
+                graveYard.get(response.gameMove.currentShipHit).setStrikethrough(true);
             }else{
                 hitMiss.setText("HIT");
             }
         }else{
             image = new ImageView("images/splash.png");
-            GridPane.setConstraints(image, response.gameMove.moveMade.getValue(), response.gameMove.moveMade.getKey());
+            GridPane.setConstraints(image, response.gameMove.moveMade.getKey(), response.gameMove.moveMade.getValue());
             image.setFitWidth(40);
             image.setFitHeight(40);
             enemyGrid.getChildren().add(image);
             image.toFront();
             hitMiss.setText("MISS");
         }
+        missHitHbox.toFront();
         fade.play();
         scale.play();
         if(clientConnection.difficulty != 3)
