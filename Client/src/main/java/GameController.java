@@ -158,8 +158,8 @@ public class GameController {
     public void drawUser(boolean firstMove){
         shipSizeMap = new HashMap<>();
         graveYard = new HashMap<>();
-        graveYard.put("Aircraft Carrier", carrier);
-        graveYard.put("Battleship", battleship);
+        graveYard.put("AircraftCarrier", carrier);
+        graveYard.put("BattleShip", battleship);
         graveYard.put("Destroyer", destroyer);
         graveYard.put("Submarine", submarine);
         graveYard.put("Cruiser", cruiser);
