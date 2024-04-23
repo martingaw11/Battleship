@@ -160,6 +160,7 @@ public class Server{
                         GameMessage result = check_AI_Board(clientRequest.gameMove.moveMade);  // check clients damage to AI Board
                         result.AI_Chat_Message = get_My_AI_Message(result);
                         updateOneClient(result,this);
+                        System.out.println("Response sent");
                     }
                     break;
 
@@ -171,13 +172,14 @@ public class Server{
                     }
                     else{
                         // process AI
-                        this.lastGamePlay = clientRequest.gameMove;     // save client's response from AI move
+                        response_PVE(clientRequest);
                     }
                     break;
 
                 case "AI Fire":
                     callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
                     AI_Fire();
+                    System.out.println("AI fire sent");
                     break;
 
                 default:
@@ -393,6 +395,17 @@ public class Server{
                 opponentResponse.turn = false;
                 updateOneClient(opponentResponse, clientMap.get(clientRequest.opponent));  // client who fired
             }
+        }
+        void response_PVE(GameMessage clientRequest){
+            this.lastGamePlay = clientRequest.gameMove;     // save client's response from AI move
+            System.out.println("Response received");
+            GameMessage gameMessage = new GameMessage();
+            gameMessage.difficulty = this.difficulty;
+            gameMessage.userID = this.clientID;
+            gameMessage.turn = true;
+            gameMessage.operationInfo = "Response";
+            gameMessage.AI_Chat_Message = get_opponent_AI_Message(clientRequest);
+            updateOneClient(gameMessage,this);
         }
 
         public void returnToBase(){

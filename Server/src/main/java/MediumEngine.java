@@ -29,7 +29,7 @@ public class MediumEngine implements Engine {
     ArrayList<ArrayList<Integer>> targetBoard;
 
     // if not empty (target mode activated), stack of all possible moves
-    Stack<Pair<Integer, Integer>> possibleMoves;
+    Stack<Pair<Integer, Integer>> possibleMoves = new Stack<>();
 
     // last move engine made
     // lastMoveMade is local to MediumEngine and HardEngine, therefore cannot be accessible from Engine Interface

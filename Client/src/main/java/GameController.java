@@ -275,6 +275,7 @@ public class GameController {
             pause.play();
             return;
         }
+        // todo: exception here
         if(Objects.equals(response.gameMove.moveMade, position)){
             position = null;
             enemyGrid.getChildren().remove(crosshair);

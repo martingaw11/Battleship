@@ -46,7 +46,7 @@ public class ClientGUI extends Application {
                 Platform.runLater(() -> clientConnection.send(clientConnection.gameCtr.checkBoard(handledMessage.gameMove.moveMade)));
             } else if (handledMessage.operationInfo.equals("Response")) {     //todo: we need to check if the message object was from the same client
                                                                             // todo:  ifso update opponent side of the board
-                Platform.runLater(() -> clientConnection.gameCtr.responseHandling(handledMessage));
+                Platform.runLater(() -> clientConnection.gameCtr.responseHandling(handledMessage)); // todo: exception here
             } else if (handledMessage.operationInfo.equals("AI Message")) {
                 // This is meant to enable the fire button after you get the AI message back when you respond to a fire.
                 // So like the server sends back an appropriate AI message after checking the response and that enables you to fire
