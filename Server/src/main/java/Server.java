@@ -97,7 +97,7 @@ public class Server{
         boolean makeFirstMove = false;
         int difficulty;
         GameInfo lastGamePlay;
-        private int AI_healthPoints = 17;
+        private int AI_healthPoints;
         HashMap<String, ArrayList<Pair<Integer, Integer>>> myAIGameBoard;
 
         public Engine gameEngine;     // ai version for Player VS AI mode
@@ -358,6 +358,7 @@ public class Server{
             this.myAIGameBoard = clientRequest.gameBoard; // set AI's gameBoard
             this.lastGamePlay = clientRequest.gameMove;     //todo: most likely null
             this.gameEngine = EngineLevel(difficulty);
+            this.AI_healthPoints = 17;
 
             GameMessage gameMessage = new GameMessage();
             gameMessage.userID = this.clientID;
