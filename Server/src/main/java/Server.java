@@ -403,7 +403,7 @@ public class Server{
             gameMessage.difficulty = this.difficulty;
             gameMessage.userID = this.clientID;
             gameMessage.turn = true;
-            gameMessage.operationInfo = "Response";
+            gameMessage.operationInfo = "AI Message";
             gameMessage.AI_Chat_Message = get_opponent_AI_Message(clientRequest);
             updateOneClient(gameMessage,this);
         }
