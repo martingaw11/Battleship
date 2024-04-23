@@ -13,18 +13,17 @@ public class EasyEngine implements Engine{
      */
 
     // Tracking previously shot at locations
-    private ArrayList<ArrayList<Integer>> targetBoard;
+    private int[][] targetBoard;
 
     /**
      * Constructor of EasyEngine Object for Easy AI Algorithm
      */
     public EasyEngine() {
-        targetBoard = new ArrayList<>();
-
-        // create a row of 10 zeros which will be added 10 times to target board
-        ArrayList<Integer> zeroRow = new ArrayList<>(Collections.nCopies(10, 0));
-        for (int i = 0; i < 10; i++) {
-            targetBoard.add(zeroRow);
+        targetBoard = new int[10][10];
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                targetBoard[row][col] = 0;
+            }
         }
     }
 
@@ -46,12 +45,13 @@ public class EasyEngine implements Engine{
         do {
             xCoord = (int)(Math.random() * 10);
             yCoord = (int)(Math.random() * 10);
+            //System.out.println("Checking position x:" + xCoord + " y:" + yCoord);
         }
         // but need to recalculate if already targeted spot once
-        while (targetBoard.get(xCoord).get(yCoord) == 1);
+        while (targetBoard[yCoord][xCoord] == 1);
 
         // update targetBoard to reflect we just shot at board position
-        targetBoard.get(xCoord).set(yCoord, 1);
+        targetBoard[yCoord][xCoord] = 1;
 
         // return never before hit coordinate we found
         return new Pair<>(xCoord, yCoord);

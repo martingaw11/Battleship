@@ -33,7 +33,8 @@ public class HardEngine implements Engine {
      */
 
     // keeping track of places missed(1)/hit(2)/not-shot-at(0), where board is technically Row-by-Col which is Y-by-X
-    ArrayList<ArrayList<Integer>> targetBoard;
+    //ArrayList<ArrayList<Integer>> targetBoard;
+    int[][] targetBoard;
 
     // keep track of pieces left, from largest to smallest, so that calculate probability based on largest piece left
     ArrayList<Integer> piecesLeft;
@@ -50,11 +51,18 @@ public class HardEngine implements Engine {
      */
     public HardEngine() {
         // create the default target board with no shots fired
-        targetBoard = new ArrayList<>();
-        // create a row of 10 zeros which will be added 10 times to target board
-        ArrayList<Integer> zeroRow = new ArrayList<>(Collections.nCopies(10, 0));
-        for (int i = 0; i < 10; i++) {
-            targetBoard.add(zeroRow);
+//        targetBoard = new ArrayList<>();
+//        // create a row of 10 zeros which will be added 10 times to target board
+//        ArrayList<Integer> zeroRow = new ArrayList<>(Collections.nCopies(10, 0));
+//        for (int i = 0; i < 10; i++) {
+//            targetBoard.add(zeroRow);
+//        }
+
+        targetBoard = new int[10][10];
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                targetBoard[row][col] = 0;
+            }
         }
 
         // must initialize pieces left from largest to smallest
@@ -82,12 +90,14 @@ public class HardEngine implements Engine {
 
         // if hit a ship, mark spot as hit and add valid neighboring cells not shot at to the possible move stack
         if (info.shipHit) {
-            targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 2);
+            //targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 2);
+            targetBoard[lastMoveMade.getKey()][lastMoveMade.getValue()] = 2;
             prepareShots(lastMoveMade);
         }
         // mark location shot at previously as missed
         else {
-            targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 1);
+            //targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 1);
+            targetBoard[lastMoveMade.getKey()][lastMoveMade.getValue()] = 1;
         }
 
         // if ship has been sunk on last move, remove ship size from piecesLeft
@@ -99,6 +109,10 @@ public class HardEngine implements Engine {
         if (!possibleMoves.empty()) {
             // make sure to store move for next shot selection
             lastMoveMade = possibleMoves.peek();
+            while (targetBoard[lastMoveMade.getKey()][lastMoveMade.getValue()] != 0) {
+                possibleMoves.pop();
+                lastMoveMade = possibleMoves.peek();
+            }
             return possibleMoves.pop();
         }
         // else, make a random guess with parity
@@ -124,6 +138,13 @@ public class HardEngine implements Engine {
 
         // initialize 10x10 grid and get the largest ship size from the pieces left
         int[][] probabilityGrid = new int[10][10];
+
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                probabilityGrid[i][j] = 0;
+            }
+        }
+
         int shipSize = piecesLeft.get(0);
 
         int xCoord = -1, yCoord = -1;
@@ -136,7 +157,7 @@ public class HardEngine implements Engine {
                 boolean valid = true;
                 // check to make sure each spot is a valid space for the ship to be
                 for (int i = 0; i < shipSize; i++) {
-                    if (targetBoard.get(row).get(col+i) != 0) {
+                    if (targetBoard[row][col+1] != 0) {
                         valid = false;
                         break;
                     }
@@ -148,8 +169,8 @@ public class HardEngine implements Engine {
                         // update current max probability location if location is more probable
                         if (probabilityGrid[row][col+i] > maxProbability) {
                             maxProbability = probabilityGrid[row][col+i];
-                            yCoord = row;
-                            xCoord = col+i;
+                            xCoord = row;
+                            yCoord = col+i;
                         }
                     }
                 }
@@ -164,7 +185,7 @@ public class HardEngine implements Engine {
                 boolean valid = true;
                 // check to make sure each spot is a valid space for the ship to be
                 for (int j = 0; j < shipSize; j++) {
-                    if (targetBoard.get(row+j).get(col) != 0) {
+                    if (targetBoard[row+j][col] != 0) {
                         valid = false;
                         break;
                     }
@@ -176,8 +197,8 @@ public class HardEngine implements Engine {
                         // update current max probability location if location is more probable
                         if (probabilityGrid[row+j][col] > maxProbability) {
                             maxProbability = probabilityGrid[row+j][col];
-                            yCoord = row+j;
-                            xCoord = col;
+                            xCoord = row+j;
+                            yCoord = col;
                         }
                     }
                 }
@@ -198,23 +219,23 @@ public class HardEngine implements Engine {
         int xCoord = rootShot.getKey();
 
         // if [y-1][x] is on grid and hasn't been shot at, add it to shot stack
-        if (yCoord > 0 && targetBoard.get(yCoord-1).get(xCoord) == 0) {
-            possibleMoves.add(new Pair<>(yCoord-1, xCoord));
+        if (xCoord > 0 && targetBoard[xCoord-1][yCoord] == 0) {
+            possibleMoves.add(new Pair<>(xCoord-1, yCoord));
         }
 
         // if [y+1][x] is on grid and hasn't been shot at, add it to shot stack
-        if (yCoord+1 < targetBoard.size() && targetBoard.get(yCoord+1).get(xCoord) == 0) {
-            possibleMoves.add(new Pair<>(yCoord+1, xCoord));
+        if (xCoord+1 < targetBoard.length && targetBoard[xCoord+1][yCoord] == 0) {
+            possibleMoves.add(new Pair<>(xCoord+1, yCoord));
         }
 
         // if [y][x-1] is on grid and hasn't been shot at, add it to shot stack
-        if (xCoord > 0 && targetBoard.get(yCoord).get(xCoord-1) == 0) {
-            possibleMoves.add(new Pair<>(yCoord, xCoord-1));
+        if (yCoord > 0 && targetBoard[xCoord][yCoord-1] == 0) {
+            possibleMoves.add(new Pair<>(xCoord, yCoord-1));
         }
 
         // if [y][x+1] is on grid and hasn't been shot at, add it to shot stack
-        if (xCoord+1 < targetBoard.get(yCoord).size() && targetBoard.get(yCoord).get(xCoord+1) == 0) {
-            possibleMoves.add(new Pair<>(yCoord, xCoord+1));
+        if (yCoord+1 < targetBoard[xCoord].length && targetBoard[xCoord][yCoord+1] == 0) {
+            possibleMoves.add(new Pair<>(xCoord, yCoord+1));
         }
     }
 }

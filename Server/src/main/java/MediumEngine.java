@@ -26,7 +26,8 @@ public class MediumEngine implements Engine {
      */
 
     // keeping track of places missed(1)/hit(2)/not-shot-at(0), where board is technically Row-by-Col which is Y-by-X
-    ArrayList<ArrayList<Integer>> targetBoard;
+    //ArrayList<ArrayList<Integer>> targetBoard;
+    int[][] targetBoard;
 
     // if not empty (target mode activated), stack of all possible moves
     Stack<Pair<Integer, Integer>> possibleMoves;
@@ -40,11 +41,18 @@ public class MediumEngine implements Engine {
      */
     public MediumEngine() {
         // create the default target board with no shots fired
-        targetBoard = new ArrayList<>();
-        // create a row of 10 zeros which will be added 10 times to target board
-        ArrayList<Integer> zeroRow = new ArrayList<>(Collections.nCopies(10, 0));
-        for (int i = 0; i < 10; i++) {
-            targetBoard.add(zeroRow);
+//        targetBoard = new ArrayList<>();
+//        // create a row of 10 zeros which will be added 10 times to target board
+//        ArrayList<Integer> zeroRow = new ArrayList<>(Collections.nCopies(10, 0));
+//        for (int i = 0; i < 10; i++) {
+//            targetBoard.add(zeroRow);
+//        }
+
+        targetBoard = new int[10][10];
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                targetBoard[row][col] = 0;
+            }
         }
 
         // empty initialization for possible move stack
@@ -69,18 +77,24 @@ public class MediumEngine implements Engine {
 
         // if hit a ship, mark spot as hit and add valid neighboring cells not shot at to the possible move stack
         if (info.shipHit) {
-            targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 2);
+            //targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 2);
+            targetBoard[lastMoveMade.getKey()][lastMoveMade.getValue()] = 2;
             prepareShots(lastMoveMade);
         }
         // mark location shot at previously as missed
         else {
-            targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 1);
+            //targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 1);
+            targetBoard[lastMoveMade.getKey()][lastMoveMade.getValue()] = 1;
         }
 
         // if possible move stack is not empty, engine is in target mode, pop targeted move off of stack
         if (!possibleMoves.empty()) {
             // make sure to store move for next shot selection
             lastMoveMade = possibleMoves.peek();
+            while (targetBoard[lastMoveMade.getKey()][lastMoveMade.getValue()] != 0) {
+                possibleMoves.pop();
+                lastMoveMade = possibleMoves.peek();
+            }
             return possibleMoves.pop();
         }
         // else, make a random guess with parity
@@ -115,9 +129,11 @@ public class MediumEngine implements Engine {
             if (yCoord % 2 != 0) {
                 xCoord += 1;
             }
+            System.out.println("Checking position x:" + xCoord + " y:" + yCoord);
         }
         // loop until we find spot that has not been shot at yet
-        while (targetBoard.get(xCoord).get(yCoord) != 0);
+        //while (targetBoard.get(xCoord).get(yCoord) != 0);
+        while (targetBoard[xCoord][yCoord] != 0);
 
         // finally found coordinates that hasn't been shot at, return this
         return new Pair<Integer, Integer>(xCoord, yCoord);
@@ -134,23 +150,23 @@ public class MediumEngine implements Engine {
         int xCoord = rootShot.getKey();
 
         // if [y-1][x] is on grid and hasn't been shot at, add it to shot stack
-        if (yCoord > 0 && targetBoard.get(yCoord-1).get(xCoord) == 0) {
-            possibleMoves.add(new Pair<>(yCoord-1, xCoord));
+        if (xCoord > 0 && targetBoard[xCoord-1][yCoord] == 0) {
+            possibleMoves.add(new Pair<>(xCoord-1, yCoord));
         }
 
         // if [y+1][x] is on grid and hasn't been shot at, add it to shot stack
-        if (yCoord+1 < targetBoard.size() && targetBoard.get(yCoord+1).get(xCoord) == 0) {
-            possibleMoves.add(new Pair<>(yCoord+1, xCoord));
+        if (xCoord+1 < targetBoard.length && targetBoard[xCoord+1][yCoord] == 0) {
+            possibleMoves.add(new Pair<>(xCoord+1, yCoord));
         }
 
         // if [y][x-1] is on grid and hasn't been shot at, add it to shot stack
-        if (xCoord > 0 && targetBoard.get(yCoord).get(xCoord-1) == 0) {
-            possibleMoves.add(new Pair<>(yCoord, xCoord-1));
+        if (yCoord > 0 && targetBoard[xCoord][yCoord-1] == 0) {
+            possibleMoves.add(new Pair<>(xCoord, yCoord-1));
         }
 
         // if [y][x+1] is on grid and hasn't been shot at, add it to shot stack
-        if (xCoord+1 < targetBoard.get(yCoord).size() && targetBoard.get(yCoord).get(xCoord+1) == 0) {
-            possibleMoves.add(new Pair<>(yCoord, xCoord+1));
+        if (yCoord+1 < targetBoard[xCoord].length && targetBoard[xCoord][yCoord+1] == 0) {
+            possibleMoves.add(new Pair<>(xCoord, yCoord+1));
         }
     }
 }
