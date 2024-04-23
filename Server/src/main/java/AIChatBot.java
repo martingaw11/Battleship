@@ -216,26 +216,26 @@ public class AIChatBot {
      */
     private void fillGameStartMessages() {
         gameStartMessages = new ArrayList<>(Arrays.asList(
-                "Welcome aboard! Ready to sink some ships?",
-                "Let the battle begin! May your aim be sharp and your tactics bright!",
-                "The neon seas await! Let's light up the board!",
-                "Prepare for some electrifying action! Let the game commence!",
-                "Hope you've got your sea legs! The game is about to get intense!",
-                "Get ready to shine! May your shots hit their mark!",
-                "Good luck, sailor! Remember, it's a journey of strategy and precision!",
-                "Time to light up the seas! Are you ready to conquer?",
-                "Let the waves guide you to victory! The game starts now!",
-                "Brace yourself for a stormy ride! Will you sink or swim?",
-                "This isn't going to be easy, sailor. Stay sharp!",
-                "The seas are unforgiving today. Keep your wits about you!",
-                "Are you sure you're ready for this? Don't let the ships intimidate you!",
-                "Watch your step out there! The seas can be treacherous!",
-                "The enemy's not going to take it easy on you. Bring your A-game!",
-                "Stay focused! The stakes are high on these neon seas!",
-                "You've got a lot riding on this. Don't mess it up!",
-                "The seas are rough today. Can you handle the pressure?",
-                "The enemy is crafty. Don't let them outsmart you!",
-                "Be careful out there! These waters are full of surprises!"
+                "Welcome aboard! Ready to sink \nsome ships?",
+                "Let the battle begin! May your\naim be sharp and your tactics bright!",
+                "The neon seas await! Let's\nlight up the board!",
+                "Prepare for some electrifying\naction! Let the game commence!",
+                "Hope you've got your sea legs!\nThe game is about to get intense!",
+                "Get ready to shine! May your\nshots hit their mark!",
+                "Good luck, sailor! Remember,\nit's a journey of strategy and precision!",
+                "Time to light up the seas!\nAre you ready to conquer?",
+                "Let the waves guide you to victory!\nThe game starts now!",
+                "Brace yourself for a stormy ride!\nWill you sink or swim?",
+                "This isn't going to be easy, sailor.\nStay sharp!",
+                "The seas are unforgiving today.\nKeep your wits about you!",
+                "Are you sure you're ready for this?\nDon't let the ships intimidate you!",
+                "Watch your step out there!\nThe seas can be treacherous!",
+                "The enemy's not going to take it\neasy on you. Bring your A-game!",
+                "Stay focused!\nThe stakes are high on these neon seas!",
+                "You've got a lot riding on this.\nDon't mess it up!",
+                "The seas are rough today.\nCan you handle the pressure?",
+                "The enemy is crafty.\nDon't let them outsmart you!",
+                "Be careful out there!\nThese waters are full of surprises!"
         ));
     }
 
@@ -246,7 +246,7 @@ public class AIChatBot {
         shipHitMessages = new ArrayList<>(Arrays.asList(
                 "Direct hit! You've got their attention!",
                 "Boom! You've made an impact!",
-                "Nice shot! That ship won't forget that one!",
+                "Nice shot!\nThat ship won't forget that one!",
                 "You've lit up the seas! Well done!",
                 "A hit! Keep that streak going!",
                 "The enemy's feeling the heat now!",
@@ -264,15 +264,15 @@ public class AIChatBot {
                 "You're making waves! Good hit!",
                 "The neon lights flicker! You've got them!",
                 "That ship's seen better days! Great shot!",
-                "That ship's in trouble! Keep the pressure on!",
+                "That ship's in trouble!\nKeep the pressure on!",
                 "That'll leave a mark! Well done!",
                 "Your aim's like a laser! Another hit!",
                 "The enemy's on the ropes! Nice job!",
                 "Another one bites the dust! Great shot!",
-                "That ship won't forget you! Hit confirmed!",
-                "The enemy's feeling the pain! Keep firing!",
+                "That ship won't forget you!\nHit confirmed!",
+                "The enemy's feeling the pain!\nKeep firing!",
                 "That's a solid hit! Keep it going!",
-                "You're making a splash out there! Well done!",
+                "You're making a splash out there!\nWell done!",
                 "Got 'em good! Keep the momentum going!"
         ));
     }
@@ -284,7 +284,7 @@ public class AIChatBot {
         shipMissMessages = new ArrayList<>(Arrays.asList(
                 "Missed by a mile! Try again!",
                 "Your shot just took a vacation!",
-                "Swing and a miss! Better luck next time!",
+                "Swing and a miss!\nBetter luck next time!",
                 "Not this time! Adjust your aim!",
                 "That one sailed away! Try again!",
                 "Missed it! Stay focused!",
@@ -319,7 +319,7 @@ public class AIChatBot {
                 "Your shot took a detour!",
                 "That one missed the mark entirely!",
                 "Your aim's a little wobbly today!",
-                "Keep your focus! You'll get it next time!",
+                "Keep your focus!\nYou'll get it next time!",
                 "That one was off the charts!",
                 "The ocean just got a little wetter!"
         ));
@@ -331,19 +331,19 @@ public class AIChatBot {
     private void fillShipSinkMessages() {
         shipSunkMessages = new ArrayList<>(Arrays.asList(
                 "That ship's down for the count! Well done!",
-                "You've sent that ship to the depths! Good job!",
+                "You've sent that ship to the depths!\nGood job!",
                 "You've sunk their battleship! No Mercy!",
-                "That ship's out of commission! Great work!",
-                "The neon lights just went out on that ship!",
-                "You've turned that ship into scrap metal!",
+                "That ship's out of commission!\nGreat work!",
+                "The neon lights just went out\non that ship!",
+                "You've turned that ship\ninto scrap metal!",
                 "Splash! You've sunk an enemy ship!",
                 "The seas just got a little emptier!",
                 "You've made waves! Ship sunk!",
-                "That ship's been defeated! Well played!",
-                "You've taken control of the seas! Ship down!",
-                "That ship's seen its last day! Nice work!",
-                "You've brought down the house... or the ship!",
-                "The seas are safer now, thanks to you!",
+                "That ship's been defeated!\nWell played!",
+                "You've taken control of the seas!\nShip down!",
+                "That ship's seen its last day!\nNice work!",
+                "You've brought down the house...\nor the ship!",
+                "The seas are safer now,\nthanks to you!",
                 "You've sunk one! Keep it going!"
         ));
     }
@@ -357,32 +357,32 @@ public class AIChatBot {
                 "The enemy found your mark!",
                 "One of your ships just took a hit!",
                 "That one left a dent! Stay vigilant!",
-                "They're onto you! Your ship took a hit!",
+                "They're onto you!\nYour ship took a hit!",
                 "Your ship felt that one! Watch out!",
                 "You've been struck! Watch your flanks!",
                 "They've scored a hit on your ship!",
                 "Your defenses took a blow!",
-                "They're closing in on you! Hit confirmed!",
-                "One of your ships is in trouble! Brace yourself!",
+                "They're closing in on you!\nHit confirmed!",
+                "One of your ships is in trouble!\nBrace yourself!",
                 "The enemy's got you in their sights!",
-                "Heads up! They've hit one of your ships!",
-                "The enemy found one of your ships! Time to regroup!",
-                "Your ship just got tagged! Stay sharp!",
-                "Uh-oh! They found you! Keep an eye out!",
-                "Your ship just took a hit! Keep your guard up!",
+                "Heads up!\nThey've hit one of your ships!",
+                "The enemy found one of your ships!\nTime to regroup!",
+                "Your ship just got tagged!\nStay sharp!",
+                "Uh-oh! They found you!\nKeep an eye out!",
+                "Your ship just took a hit!\nKeep your guard up!",
                 "The enemy struck one of your ships!",
-                "They've got your ship in their crosshairs!",
-                "Watch out! They hit one of your ships!",
+                "They've got your ship in\ntheir crosshairs!",
+                "Watch out!\nThey hit one of your ships!",
                 "Your ship just felt the enemy's wrath!",
-                "You've been hit! Don't lose your cool!",
+                "You've been hit!\nDon't lose your cool!",
                 "Your ship's in danger! Time to react!",
-                "That hit might slow you down! Watch out!",
-                "One of your ships just took some damage!",
-                "The enemy's putting up a fight! Stay ready!",
-                "You're under fire! Hold your ground!",
-                "A direct hit on your ship! Be careful!",
+                "That hit might slow you down!\nWatch out!",
+                "One of your ships just took\nsome damage!",
+                "The enemy's putting up a fight!\nStay ready!",
+                "You're under fire!\nHold your ground!",
+                "A direct hit on your ship!\nBe careful!",
                 "Your defenses just took a blow!",
-                "That ship's been hit! Don't let them sink it!"
+                "That ship's been hit!\nDon't let them sink it!"
         ));
     }
 
@@ -391,21 +391,21 @@ public class AIChatBot {
      */
     private void fillOppMissShipMessages() {
         opponentMissMessages = new ArrayList<>(Arrays.asList(
-                "They missed! That was a close one!",
+                "They missed!\nThat was a close one!",
                 "The enemy's shot went wide!",
                 "Safe! The enemy's aim was off!",
                 "Looks like they missed their mark!",
-                "Your ship was untouched! Stay lucky!",
+                "Your ship was untouched!\nStay lucky!",
                 "The seas shielded you this time!",
                 "That shot sailed right past you!",
                 "A near miss! Keep them guessing!",
                 "The enemy's aim needs work!",
-                "Missed you by a mile! Well done!",
-                "They thought they had you! Not quite!",
+                "Missed you by a mile!\nWell done!",
+                "They thought they had you!\nNot quite!",
                 "That shot won't leave a mark!",
-                "Dodged a bullet there! Or a cannonball!",
-                "Your ship stays unscathed! Stay on guard!",
-                "Their aim's all at sea! You're safe!",
+                "Dodged a bullet there!\nOr a cannonball!",
+                "Your ship stays unscathed!\nStay on guard!",
+                "Their aim's all at sea!\nYou're safe!",
                 "No hits for them! Keep that up!",
                 "They tried, but you were too swift!",
                 "Your ship evaded their shot!",
@@ -413,24 +413,24 @@ public class AIChatBot {
                 "Safe from harm! Keep it up!",
                 "Their shot's lost in the waves!",
                 "The enemy's tactics are off today!",
-                "Smooth sailing! That one missed!",
-                "Your ship remains untouched! Well played!",
+                "Smooth sailing!\nThat one missed!",
+                "Your ship remains untouched!\nWell played!",
                 "That miss keeps you in the game!",
                 "The ocean's on your side today!",
-                "They fired, but missed! Keep them guessing!",
+                "They fired, but missed!\nKeep them guessing!",
                 "The enemy's shots are off course!",
                 "You dodged one! Keep it up!",
-                "That shot didn't land! You're in luck!",
+                "That shot didn't land!\nYou're in luck!",
                 "The enemy couldn't find you this time!",
-                "They missed the target! Stay sharp!",
+                "They missed the target!\nStay sharp!",
                 "That shot missed your ship entirely!",
-                "Their aim needs practice! You're safe!",
-                "You slipped through the cracks! Well done!",
+                "Their aim needs practice!\nYou're safe!",
+                "You slipped through the cracks!\nWell done!",
                 "The enemy's shot missed you completely!",
-                "Your ship's untouched! Keep the streak!",
+                "Your ship's untouched!\nKeep the streak!",
                 "That was a clear miss! You're safe!",
-                "You've got some good luck today! Missed!",
-                "The enemy missed their shot! Stay ahead!"
+                "You've got some good luck today!\nMissed!",
+                "The enemy missed their shot!\nStay ahead!"
         ));
     }
 
@@ -439,21 +439,21 @@ public class AIChatBot {
      */
     private void fillOppSinkShipMessages() {
         opponentSinkMessages = new ArrayList<>(Arrays.asList(
-                "One of your ships just went down! Time to regroup!",
-                "Your ship's out of the game! Hold the line!",
+                "One of your ships just went down!\nTime to regroup!",
+                "Your ship's out of the game!\nHold the line!",
                 "Splash! They sunk one of your ships!",
-                "Your defenses took a hit! Don't lose hope!",
-                "The seas just got a little emptier for you!",
-                "You lost a ship! Don't let them take another!",
+                "Your defenses took a hit!\nDon't lose hope!",
+                "The seas just got a little\nemptier for you!",
+                "You lost a ship!\nDon't let them take another!",
                 "Your ship's been sent to the bottom!",
                 "A casualty in your fleet! Stay strong!",
                 "They got you good! Stay focused!",
-                "Your ship's down! Time to change your strategy!",
+                "Your ship's down!\nTime to change your strategy!",
                 "The enemy's made a dent in your fleet!",
                 "A loss in your fleet! Keep your cool!",
-                "Your ship's gone under! Stand your ground!",
+                "Your ship's gone under!\nStand your ground!",
                 "You lost one! Stay sharp!",
-                "The enemy took down a ship! Don't give up!"
+                "The enemy took down a ship!\nDon't give up!"
         ));
     }
 
@@ -462,16 +462,16 @@ public class AIChatBot {
      */
     private void fillGameWinMessages() {
         gameWonMessages = new ArrayList<>(Arrays.asList(
-                "You've lit up the seas with your victory!",
-                "You've sunk all the ships! Your strategy shines!",
+                "You've lit up the seas with\nyour victory!",
+                "You've sunk all the ships!\nYour strategy shines!",
                 "Bravo! You've mastered the art of war!",
                 "The ocean's glowing with your triumph!",
-                "You've outmaneuvered them all! Fantastic job!",
+                "You've outmaneuvered them all!\nFantastic job!",
                 "You set the seas ablaze with your win!",
-                "The competition couldn't handle your brilliance!",
-                "You've navigated to success! Well done!",
+                "The competition couldn't\nhandle your brilliance!",
+                "You've navigated to success!\nWell done!",
                 "You illuminated the path to victory!",
-                "You've outshined the enemy! Congratulations!"
+                "You've outshined the enemy!\nCongratulations!"
         ));
     }
 
@@ -480,16 +480,16 @@ public class AIChatBot {
      */
     private void fillGameLossMessages() {
         gameLostMessages = new ArrayList<>(Arrays.asList(
-                "Your fleet went down in flames! Better luck next time!",
-                "You've been washed away! Time to rethink your strategy!",
-                "That was a total shipwreck! Try again soon!",
-                "Your ships are history! You might need a new map!",
+                "Your fleet went down in flames!\nBetter luck next time!",
+                "You've been washed away!\nTime to rethink your strategy!",
+                "That was a total shipwreck!\nTry again soon!",
+                "Your ships are history!\nYou might need a new map!",
                 "Looks like the enemy had the last laugh!",
-                "Your ships got schooled! Try studying the seas next time!",
-                "They sunk you like a stone! Time to polish your skills!",
-                "That defeat was a big splash! Learn from your losses!",
-                "Your strategy just sank! Time to regroup!",
-                "You've hit rock bottom! Can you rise back to the top?"
+                "Your ships got schooled!\nTry studying the seas next time!",
+                "They sunk you like a stone!\nTime to polish your skills!",
+                "That defeat was a big splash!\nLearn from your losses!",
+                "Your strategy just sank!\nTime to regroup!",
+                "You've hit rock bottom!\nCan you rise back to the top?"
         ));
     }
 }
