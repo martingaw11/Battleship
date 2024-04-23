@@ -42,6 +42,7 @@ public class HardEngine implements Engine {
     Stack<Pair<Integer, Integer>> possibleMoves;
 
     // storing the last move that the engine made for the game
+    // lastMoveMade is local to MediumEngine and HardEngine, therefore cannot be accessible from Engine Interface
     Pair<Integer, Integer> lastMoveMade;
 
     /**
@@ -70,6 +71,9 @@ public class HardEngine implements Engine {
      */
     @Override
     public Pair<Integer, Integer> makeMove(GameInfo info) {
+        // update lastMoveMade from info
+        lastMoveMade = info.moveMade;
+
         // if hit a ship, mark spot as hit and add valid neighboring cells not shot at to the possible move stack
         if (info.shipHit) {
             targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 2);

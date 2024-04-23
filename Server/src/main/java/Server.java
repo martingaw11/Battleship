@@ -1,3 +1,5 @@
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -93,10 +95,12 @@ public class Server{
         ObjectInputStream in;
         ObjectOutputStream out;
         boolean makeFirstMove = false;
+        int difficulty;
         GameInfo lastGamePlay;
+        private int AI_healthPoints = 17;
         HashMap<String, ArrayList<Pair<Integer, Integer>>> myAIGameBoard;
 
-        Engine gameEngine;     // ai version for Player VS AI mode
+        public Engine gameEngine;     // ai version for Player VS AI mode
 
         ClientThread(Socket s, int count){
             this.connection = s;
@@ -124,6 +128,8 @@ public class Server{
                 System.out.println("did not notify clients");
             }
         }
+
+        // todo: note all messages from client must have difficulty, opponent and userId at least set
         public void processRequest(GameMessage clientRequest){
             switch(clientRequest.operationInfo){
                 case "deploy":
@@ -149,8 +155,11 @@ public class Server{
                     if(clientRequest.difficulty == 3){
                         updateOneClient(clientRequest, clientMap.get(clientRequest.opponent));
                     }
+                    // player vs AI --> send response to client
                     else{
-                            // process AI....
+                        GameMessage result = check_AI_Board(clientRequest.gameMove.moveMade);  // check clients damage to AI Board
+                        result.AI_Chat_Message = get_My_AI_Message(result);
+                        updateOneClient(result,this);
                     }
                     break;
 
@@ -158,13 +167,17 @@ public class Server{
                     callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
                     // player vs player
                     if(clientRequest.difficulty == 3){
-                        // todo: note all messages from client must have difficulty, opponent and userId at least set
-                        // todo: opponent and client board updates wrongly
                         response_PVP(clientRequest);
                     }
                     else{
                         // process AI
+                        this.lastGamePlay = clientRequest.gameMove;     // save client's response from AI move
                     }
+                    break;
+
+                case "AI Fire":
+                    callback.accept(clientRequest.userID  + " requested : " + clientRequest.operationInfo);
+                    AI_Fire();
                     break;
 
                 default:
@@ -172,7 +185,81 @@ public class Server{
                     System.out.println(clientRequest.userID  + " : " + clientRequest.operationInfo + "is an invalid operation");
             }
         }
+        // function makes AI gameplay
+        public void AI_Fire(){
+            GameMessage gameMessage = new GameMessage();
+            gameMessage.userID = this.clientID;
+            gameMessage.difficulty = this.difficulty;
+            gameMessage.operationInfo = "Fire";
+            gameMessage.gameMove = new GameInfo();
+            gameMessage.turn = true;
 
+            // player vs AI
+            // if(lastMove == null) -> random, else use EngineMakeMove
+            // randomize game move
+            if(Objects.isNull(lastGamePlay)){
+                int xCoord = -1, yCoord = -1;
+                xCoord = (int)(Math.random() * 10);
+                yCoord = (int)(Math.random() * 10);
+                gameMessage.gameMove.moveMade = new Pair<>(xCoord, yCoord);
+            }
+            // use Engine to make move based on difficulty
+            else{
+                gameMessage.gameMove.moveMade = gameEngine.makeMove(lastGamePlay);
+            }
+            updateOneClient(gameMessage,this);
+        }
+        public int sizeOfShip (String ship){
+            switch(ship){
+                case "AircraftCarrier":
+                    return 5;
+
+                case "BattleShip":
+                    return 4;
+
+                case "Destroyer":
+                    return 2;
+            }
+            // case "Cruiser":  case "Submarine":
+            return 3;
+        }
+
+        // function checks AI Board against clients move
+        public GameMessage check_AI_Board(Pair<Integer, Integer> moveMade) {
+            GameMessage tempMessage = new GameMessage();
+            tempMessage.userID = this.clientID;
+            tempMessage.difficulty = this.difficulty;
+            tempMessage.operationInfo = "Response";
+            tempMessage.gameMove = new GameInfo();
+            tempMessage.gameMove.moveMade = moveMade;
+            tempMessage.gameMove.shipHit = false;
+            tempMessage.gameMove.shipSunk = false;
+
+            for(String x : myAIGameBoard.keySet()){
+                for(Pair<Integer, Integer> y : myAIGameBoard.get(x)){
+                    if(Objects.equals(y, moveMade)){
+                        myAIGameBoard.get(x).remove(y);
+                        if(myAIGameBoard.get(x).isEmpty()){
+                            tempMessage.gameMove.shipSunk = true;
+                            tempMessage.gameMove.currentShipHit = x;
+                            tempMessage.gameMove.sizeOfShip = sizeOfShip(x);
+                        }
+                        tempMessage.gameMove.shipHit = true;
+                        AI_healthPoints--;
+                        if(AI_healthPoints == 0){
+                            tempMessage.isOver = true;
+                            tempMessage.userWon = false;
+                            return tempMessage;
+                        }
+
+                        return tempMessage;
+                    }
+                }
+            }
+            return tempMessage;
+        }
+
+        // returns AI message to Client who fired
         private String get_My_AI_Message(GameMessage gameMessage) {
 
             // if shipSunk
@@ -188,6 +275,7 @@ public class Server{
 
         }
 
+        // returns AI message to Client who was fired at
         private String get_opponent_AI_Message(GameMessage gameMessage) {
 
             // if shipSunk
@@ -257,16 +345,33 @@ public class Server{
 
             }
         }
+        private Engine EngineLevel(int difficulty){
+            switch (difficulty){
+                case 2:
+                    return new HardEngine();
+                case 1:
+                    return new MediumEngine();
+            }
+            // default case 0:
+            return new EasyEngine();
+        }
         void deploy_PVE(GameMessage clientRequest){
-            this.makeFirstMove = true;      // player always starts VS AI
             callback.accept(clientRequest.userID +" is playing against Engine" + clientRequest.difficulty);
+
+            this.difficulty = clientRequest.difficulty;
+            this.makeFirstMove = true;      // player always starts VS AI
+            this.myAIGameBoard = clientRequest.gameBoard; // set AI's gameBoard
+            this.lastGamePlay = clientRequest.gameMove;     //todo: most likely null
+            this.gameEngine = EngineLevel(difficulty);
+
             GameMessage gameMessage = new GameMessage();
             gameMessage.userID = this.clientID;
+            gameMessage.difficulty = clientRequest.difficulty;
             gameMessage.AI_Chat_Message = chatBot.getStartMessage();
             gameMessage.operationInfo = "Deployed";
             updateOneClient(gameMessage, this);
-            this.myAIGameBoard = clientRequest.gameBoard; // set AI's gameBoard
-            System.out.println("deploy");
+
+            System.out.println("deploy vs AI");
         }
 
         void response_PVP(GameMessage clientRequest){
