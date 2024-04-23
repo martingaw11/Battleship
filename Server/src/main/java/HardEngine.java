@@ -132,11 +132,11 @@ public class HardEngine implements Engine {
         // first need to check all horizontal orientations (always facing right) of the ship
         for (int row = 0; row < 10; row++) {
             // can't check all columns as starting point of ship will be off of map
-            for (int col = 0; col < 11-shipSize; col++) {
+            for (int col = 0; col < 10-shipSize; col++) {
                 boolean valid = true;
                 // check to make sure each spot is a valid space for the ship to be
                 for (int i = 0; i < shipSize; i++) {
-                    if (targetBoard.get(row+i).get(col) != 0) {
+                    if (targetBoard.get(row).get(col+i) != 0) {
                         valid = false;
                         break;
                     }
@@ -144,12 +144,12 @@ public class HardEngine implements Engine {
                 // then loop over same spots again if it is a valid location to increment probability
                 if (valid) {
                     for (int i = 0; i < shipSize; i++) {
-                        probabilityGrid[row+i][col]++;
+                        probabilityGrid[row][col+i]++;
                         // update current max probability location if location is more probable
-                        if (probabilityGrid[row+i][col] > maxProbability) {
-                            maxProbability = probabilityGrid[row+i][col];
-                            yCoord = row+i;
-                            xCoord = col;
+                        if (probabilityGrid[row][col+i] > maxProbability) {
+                            maxProbability = probabilityGrid[row][col+i];
+                            yCoord = row;
+                            xCoord = col+i;
                         }
                     }
                 }
@@ -159,12 +159,12 @@ public class HardEngine implements Engine {
 
         // second need to check all vertical orientations (always facing down) of the ship
         // can't check all rows as starting point of ship will be off of map
-        for (int row = 0; row < 11-shipSize; row++) {
+        for (int row = 0; row < 10-shipSize; row++) {
             for (int col = 0; col < 10; col++) {
                 boolean valid = true;
                 // check to make sure each spot is a valid space for the ship to be
                 for (int j = 0; j < shipSize; j++) {
-                    if (targetBoard.get(row).get(col+j) != 0) {
+                    if (targetBoard.get(row+j).get(col) != 0) {
                         valid = false;
                         break;
                     }
@@ -172,12 +172,12 @@ public class HardEngine implements Engine {
                 // then loop over same spots again if it is a valid location to increment probability
                 if (valid) {
                     for (int j = 0; j < shipSize; j++) {
-                        probabilityGrid[row][col+j]++;
+                        probabilityGrid[row+j][col]++;
                         // update current max probability location if location is more probable
-                        if (probabilityGrid[row][col+j] > maxProbability) {
-                            maxProbability = probabilityGrid[row][col+j];
-                            yCoord = row;
-                            xCoord = col+j;
+                        if (probabilityGrid[row+j][col] > maxProbability) {
+                            maxProbability = probabilityGrid[row+j][col];
+                            yCoord = row+j;
+                            xCoord = col;
                         }
                     }
                 }
