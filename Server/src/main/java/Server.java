@@ -504,12 +504,16 @@ public class Server{
                     // Handle any exceptions during message processing
                     callback.accept("OOOOPPs...Something wrong with the socket from client: " + clientID + "....closing down!");
 
-                    // Inform other clients that this client has left the server
+                    // Inform opponent that this client has left the server
                     GameMessage newGameMessage = new GameMessage();
-                    newGameMessage.userID = clientID;
-                    newGameMessage.MessageInfo = "Client " + clientID + " has left the server!";
-
-                    //toDo inform opponent that the this thread surrendered
+                    newGameMessage.operationInfo = "Response";
+                    newGameMessage.userID = this.clientID;
+                    newGameMessage.opponent = this.opponent;
+                    newGameMessage.turn = true;
+                    newGameMessage.AI_Chat_Message = this.clientID + " + retreated!!!\n" +
+                                                                "You win by default";
+                    newGameMessage.isOver = true;
+                    updateOneClient(newGameMessage,clientMap.get(this.opponent));
 
                     // Remove this client from the list of active clients
                     clients.remove(this);
