@@ -45,7 +45,6 @@ public class EasyEngine implements Engine{
         do {
             xCoord = (int)(Math.random() * 10);
             yCoord = (int)(Math.random() * 10);
-            //System.out.println("Checking position x:" + xCoord + " y:" + yCoord);
         }
         // but need to recalculate if already targeted spot once
         while (targetBoard[yCoord][xCoord] == 1);

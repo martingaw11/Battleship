@@ -41,13 +41,6 @@ public class MediumEngine implements Engine {
      */
     public MediumEngine() {
         // create the default target board with no shots fired
-//        targetBoard = new ArrayList<>();
-//        // create a row of 10 zeros which will be added 10 times to target board
-//        ArrayList<Integer> zeroRow = new ArrayList<>(Collections.nCopies(10, 0));
-//        for (int i = 0; i < 10; i++) {
-//            targetBoard.add(zeroRow);
-//        }
-
         targetBoard = new int[10][10];
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 10; col++) {
@@ -77,13 +70,11 @@ public class MediumEngine implements Engine {
 
         // if hit a ship, mark spot as hit and add valid neighboring cells not shot at to the possible move stack
         if (info.shipHit) {
-            //targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 2);
             targetBoard[lastMoveMade.getKey()][lastMoveMade.getValue()] = 2;
             prepareShots(lastMoveMade);
         }
         // mark location shot at previously as missed
         else {
-            //targetBoard.get(lastMoveMade.getValue()).set(lastMoveMade.getKey(), 1);
             targetBoard[lastMoveMade.getKey()][lastMoveMade.getValue()] = 1;
         }
 
@@ -129,10 +120,8 @@ public class MediumEngine implements Engine {
             if (yCoord % 2 != 0) {
                 xCoord += 1;
             }
-            System.out.println("Checking position x:" + xCoord + " y:" + yCoord);
         }
         // loop until we find spot that has not been shot at yet
-        //while (targetBoard.get(xCoord).get(yCoord) != 0);
         while (targetBoard[xCoord][yCoord] != 0);
 
         // finally found coordinates that hasn't been shot at, return this

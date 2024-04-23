@@ -138,6 +138,7 @@ public class HardEngine implements Engine {
 
         // initialize 10x10 grid and get the largest ship size from the pieces left
         int[][] probabilityGrid = new int[10][10];
+        ArrayList<Pair<Integer, Integer>> maxLocations = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -146,18 +147,16 @@ public class HardEngine implements Engine {
         }
 
         int shipSize = piecesLeft.get(0);
-
-        int xCoord = -1, yCoord = -1;
         int maxProbability = 0;
 
         // first need to check all horizontal orientations (always facing right) of the ship
         for (int row = 0; row < 10; row++) {
             // can't check all columns as starting point of ship will be off of map
-            for (int col = 0; col < 10-shipSize; col++) {
+            for (int col = 0; col < 11-shipSize; col++) {
                 boolean valid = true;
                 // check to make sure each spot is a valid space for the ship to be
                 for (int i = 0; i < shipSize; i++) {
-                    if (targetBoard[row][col+1] != 0) {
+                    if (targetBoard[row][col+i] != 0) {
                         valid = false;
                         break;
                     }
@@ -169,8 +168,11 @@ public class HardEngine implements Engine {
                         // update current max probability location if location is more probable
                         if (probabilityGrid[row][col+i] > maxProbability) {
                             maxProbability = probabilityGrid[row][col+i];
-                            xCoord = row;
-                            yCoord = col+i;
+                            maxLocations.clear();
+                            maxLocations.add(new Pair<>(row, col+i));
+                        }
+                        if (probabilityGrid[row][col+i] == maxProbability) {
+                            maxLocations.add(new Pair<>(row, col + i));
                         }
                     }
                 }
@@ -180,7 +182,7 @@ public class HardEngine implements Engine {
 
         // second need to check all vertical orientations (always facing down) of the ship
         // can't check all rows as starting point of ship will be off of map
-        for (int row = 0; row < 10-shipSize; row++) {
+        for (int row = 0; row < 11-shipSize; row++) {
             for (int col = 0; col < 10; col++) {
                 boolean valid = true;
                 // check to make sure each spot is a valid space for the ship to be
@@ -197,15 +199,26 @@ public class HardEngine implements Engine {
                         // update current max probability location if location is more probable
                         if (probabilityGrid[row+j][col] > maxProbability) {
                             maxProbability = probabilityGrid[row+j][col];
-                            xCoord = row+j;
-                            yCoord = col;
+                            maxLocations.clear();
+                            maxLocations.add(new Pair<>(row+j, col));
+                        }
+                        if (probabilityGrid[row+j][col] == maxProbability) {
+                            maxLocations.add(new Pair<>(row+j, col));
                         }
                     }
                 }
             }
         }
 
-        return new Pair<>(xCoord, yCoord);
+//        for (int row = 0; row < 10; row++) {
+//            for (int col = 0; col < 10; col++) {
+//                System.out.println("Prob: " + probabilityGrid[row][col] + "\t\t(" + row + ", " + col + ")");
+//            }
+//        }
+
+        int index = (int)(Math.random() * maxLocations.size());
+
+        return maxLocations.get(index);
     }
 
     /**
