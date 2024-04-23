@@ -317,6 +317,7 @@ public class GameController {
             SnapToGridController ctr = loader.getController();
             ctr.clientConnection = clientConnection;
             clientConnection.gameCtr = null;
+            ctr.userDisplay.setText(clientConnection.clientID);
             rootGame.getScene().setRoot(temp);
         } catch (IOException ex) {
             throw new RuntimeException(ex);

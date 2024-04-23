@@ -195,20 +195,7 @@ public class Server{
             gameMessage.operationInfo = "Fire";
             gameMessage.gameMove = new GameInfo();
             gameMessage.turn = true;
-
-            // player vs AI
-            // if(lastMove == null) -> random, else use EngineMakeMove
-            // randomize game move
-            if(Objects.isNull(lastGamePlay)){
-                int xCoord = -1, yCoord = -1;
-                xCoord = (int)(Math.random() * 10);
-                yCoord = (int)(Math.random() * 10);
-                gameMessage.gameMove.moveMade = new Pair<>(xCoord, yCoord);
-            }
-            // use Engine to make move based on difficulty
-            else{
-                gameMessage.gameMove.moveMade = gameEngine.makeMove(lastGamePlay);
-            }
+            gameMessage.gameMove.moveMade = gameEngine.makeMove(lastGamePlay);
             updateOneClient(gameMessage,this);
         }
         public int sizeOfShip (String ship){
@@ -263,7 +250,10 @@ public class Server{
 
         // returns AI message to Client who fired
         private String get_My_AI_Message(GameMessage gameMessage) {
-
+            // if surrender/game over
+            if(gameMessage.isOver){
+                return chatBot.getWonGameMessage();
+            }
             // if shipSunk
             if(gameMessage.gameMove.shipSunk){
                return chatBot.getShipSunkMessage();
@@ -279,9 +269,12 @@ public class Server{
 
         // returns AI message to Client who was fired at
         private String get_opponent_AI_Message(GameMessage gameMessage) {
-
+            // if surrender/game over
+            if(gameMessage.isOver){
+                return chatBot.getLostGameMessage();
+            }
             // if shipSunk
-            if(gameMessage.gameMove.shipSunk){
+            else if(gameMessage.gameMove.shipSunk){
                 return chatBot.getOppSunkShipMessage();
             }
             // if shipHit

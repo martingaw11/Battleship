@@ -48,6 +48,7 @@ public class SearchingForPlayerController {
                 BorderPane temp = loader.load();
                 SnapToGridController ctr = loader.getController();
                 ctr.clientConnection = clientConnection;
+                ctr.userDisplay.setText(clientConnection.clientID);
 
                 // send request to server
                 GameMessage gameMessage = new GameMessage();
