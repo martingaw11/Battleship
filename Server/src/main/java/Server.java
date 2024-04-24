@@ -364,6 +364,7 @@ public class Server{
             gameMessage.userID = this.clientID;
             gameMessage.difficulty = clientRequest.difficulty;
             gameMessage.AI_Chat_Message = chatBot.getStartMessage();
+            gameMessage.turn = true;
             gameMessage.operationInfo = "Deployed";
             updateOneClient(gameMessage, this);
 
@@ -510,7 +511,7 @@ public class Server{
                     newGameMessage.userID = this.clientID;
                     newGameMessage.opponent = this.opponent;
                     newGameMessage.turn = true;
-                    newGameMessage.AI_Chat_Message = this.clientID + " + retreated!!!\n" +
+                    newGameMessage.AI_Chat_Message = this.clientID + " retreated!!!\n" +
                                                                 "You win by default";
                     newGameMessage.isOver = true;
                     updateOneClient(newGameMessage,clientMap.get(this.opponent));
@@ -521,10 +522,6 @@ public class Server{
 
                     synchronized (listOfClientsID){
                         newGameMessage.userNames = new HashSet<>(listOfClientsID);
-                    }
-
-                    if(clientID != null){
-                        updateClients(newGameMessage);
                     }
                     break; // Exit the loop and end the thread
                 }
@@ -554,5 +551,18 @@ public class Server{
 
     }//end of client thread
 
+    public void ServerShutDown() throws IOException {
+        GameMessage shutdown = new GameMessage();
+        shutdown.operationInfo = "Server down";
+        for( ClientThread c : clients){
+            try{
+                c.out.writeObject(shutdown);
+            }
+            catch (IOException e){
+                System.out.println("Unable to close Client");
+            }
+
+        }
+    }
 
 }

@@ -10,6 +10,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.IOException;
+
 public class ServerUI extends Application {
     Server sv;
     ListView<String> screen = new ListView<>();
@@ -29,6 +31,12 @@ public class ServerUI extends Application {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
+                System.out.println("Closing server");
+                try {
+                    sv.ServerShutDown();
+                } catch (IOException e) {
+                    System.out.println("Server shutdown alert failed");
+                }
                 Platform.exit();
                 System.exit(0);
             }

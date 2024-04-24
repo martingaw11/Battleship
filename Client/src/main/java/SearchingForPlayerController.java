@@ -57,7 +57,6 @@ public class SearchingForPlayerController {
                 gameMessage.difficulty = clientConnection.difficulty;
                 gameMessage.operationInfo = "backToBase";
                 clientConnection.send(gameMessage);
-
                 rootSearch.getScene().setRoot(temp);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);

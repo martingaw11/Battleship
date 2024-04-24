@@ -52,6 +52,11 @@ public class ClientGUI extends Application {
                 Platform.runLater(() -> clientConnection.gameCtr.aiTextHandling(handledMessage.turn, handledMessage.AI_Chat_Message));
             } else if(handledMessage.newUser && clientConnection.clientID == null){
                 clientConnection.userNames.addAll(handledMessage.userNames);
+            } else if (handledMessage.operationInfo.equals("Server down")) {
+                Platform.exit();
+                System.exit(0);
+            } else if (handledMessage.operationInfo.equals("Deployed") && handledMessage.difficulty < 3) {
+                Platform.runLater(() -> clientConnection.gameCtr.aiTextHandling(handledMessage.turn, handledMessage.AI_Chat_Message));
             }
         });
         clientConnection.start();
