@@ -25,7 +25,7 @@ public class ClientGUI extends Application {
     public void start(Stage primaryStage) {
         clientConnection = new Client(data->{
             handledMessage = (GameMessage)data;
-            // todo: how is pve start game handled
+
             if(handledMessage.opponentMatched){
                 clientConnection.opponent = handledMessage.opponent;
                 try {

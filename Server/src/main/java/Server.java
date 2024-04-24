@@ -71,7 +71,7 @@ public class Server{
 
                     Socket clientSocket = mysocket.accept();
 
-                    ClientThread c = new ClientThread(clientSocket, ++count);  //todo: clientSocket ??
+                    ClientThread c = new ClientThread(clientSocket, ++count);
                     callback.accept("new client has connected to server: " + "client #" + count);
                     clients.add(c);
                     c.start();
@@ -107,7 +107,7 @@ public class Server{
             this.count = count;			// client who?
         }
 
-        //todo: update clients general
+        // update clients general
         public void updateClients(GameMessage newGameMessage) {
 
             for (ClientThread t : clients) {
@@ -129,7 +129,7 @@ public class Server{
             }
         }
 
-        // todo: note all messages from client must have difficulty, opponent and userId at least set
+        // note all messages from client must have difficulty, opponent and userId at least set
         public void processRequest(GameMessage clientRequest){
             switch(clientRequest.operationInfo){
                 case "deploy":
@@ -301,7 +301,7 @@ public class Server{
 
                         // set opponents for c1 and c2
                         c1.opponent = c2.clientID;
-                        c1.makeFirstMove = true;      // player c1 starts game round    // todo: may not be needed in client Thread
+                        c1.makeFirstMove = true;      // player c1 starts game round
                         c2.opponent = c1.clientID;
 
                         // server notification
@@ -356,7 +356,7 @@ public class Server{
             this.difficulty = clientRequest.difficulty;
             this.makeFirstMove = true;      // player always starts VS AI
             this.myAIGameBoard = clientRequest.gameBoard; // set AI's gameBoard
-            this.lastGamePlay = clientRequest.gameMove;     //todo: most likely null
+            this.lastGamePlay = clientRequest.gameMove;
             this.gameEngine = EngineLevel(difficulty);
             this.AI_healthPoints = 17;
 
@@ -374,7 +374,9 @@ public class Server{
         void response_PVP(GameMessage clientRequest){
             // if client surrenders send win message to opponent
             if(clientRequest.isOver){
-                System.out.println(clientRequest.opponent + "won");
+                System.out.println(clientRequest.opponent + " wins VS " + clientRequest.userID);
+                clientRequest.turn = true;
+                clientRequest.AI_Chat_Message = chatBot.getWonGameMessage();
                 updateOneClient(clientRequest, clientMap.get(clientRequest.opponent));
             }
             else{
@@ -420,7 +422,6 @@ public class Server{
             }
         }
 
-        //todo: update clients moves
 
         public void run() {
             try {
@@ -437,7 +438,7 @@ public class Server{
             }
 
 
-            // todo Process client request
+            // Process client request
             while (true) {
                 try {
 
@@ -466,11 +467,10 @@ public class Server{
                         }
                     }
                     else{
-                        // todo: listening for client request
-                        // todo: if client request is "deploy" add thread to queue
+                        // listening for client request
 
                         // you can skip block
-                        {   //  ***************************     debugging     **************************
+                        {       //  ***************************     show transaction on server GUI     **************************
 
                             // Update server && clients with the received message
                             if(clientGameMessage.opponentMatched){
@@ -480,17 +480,14 @@ public class Server{
 
                             clientGameMessage.userID = clientID;
 
-                            //todo: here i update userNames
+                            // update userNames
                             synchronized (listOfClientsID) {
                                 clientGameMessage.userNames = new HashSet<>(listOfClientsID);
-                            }
-                            if(clientID != null){
-                                //updateClients(clientGameMessage);   // for some reason lets keep updating client usernames
                             }
 
                         }
 
-                        //  ***************************     debugging     **************************
+                        //  ***************************      show transaction on server GUI     **************************
 
 
                         // ****************************** process client request ******************************

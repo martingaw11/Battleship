@@ -27,10 +27,6 @@ public class GameMessage implements Serializable {
      * returns true if user successfully paired with an opponent username
      */
     boolean opponentMatched = false;
-    /**
-     * returns message from user
-     */
-    String MessageInfo = "";
 
     /**
      * returns type of transaction for server
@@ -64,10 +60,6 @@ public class GameMessage implements Serializable {
      */
     Set<String> userNames;
 
-    /**
-     * returns recipient of message
-     */
-    String recipient;  // may keep this for mega chat hub
     /**
      * 0 if easy AI
      * 1 if medium AI

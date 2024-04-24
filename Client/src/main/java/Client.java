@@ -69,7 +69,7 @@ public class Client extends Thread{
 		try {
 			out.writeObject(newMessage);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			System.out.println("Error in sending message");
 			e.printStackTrace();
 		}

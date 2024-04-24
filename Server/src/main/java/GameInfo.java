@@ -26,19 +26,8 @@ public class GameInfo implements Serializable {
      */
     int sizeOfShip;
     /**
-     * returns total number of ship hit
-     */
-    int totalShipHit;
-    /**
-     * returns total number of ship sunk
-     */
-    int totalShipSunk;
-    /**
      * returns name of ship hit
      */
     String currentShipHit;
-    /**
-     * ArrayList<string>  of ships sunk
-     */
-    ArrayList<String> graveYard;
+   ;
 }
