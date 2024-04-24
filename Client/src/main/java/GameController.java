@@ -71,6 +71,8 @@ public class GameController {
 
     private HashMap<String, Text> graveYard;
 
+    private boolean enableFire = false;
+
     @FXML
     public void initialize(){
         scale = new ScaleTransition();
@@ -91,14 +93,21 @@ public class GameController {
         fade.setToValue(1);
         fade.setAutoReverse(true);
         fade.setCycleCount(2);
+        fade.setOnFinished(e -> {
+            if(enableFire){
+                makeMove.setDisable(false);
+                userTurn.setVisible(true);
+                enemyTurn.setVisible(false);
+            }
+        });
 
         pause = new PauseTransition();
-        pause.setDuration(Duration.seconds(1));
+        pause.setDuration(Duration.seconds(2));
         pause.setOnFinished(e -> {
             backToBase();
         });
 
-        pauseAI = new PauseTransition(Duration.seconds(2));
+        pauseAI = new PauseTransition(Duration.millis(2500));
         pauseAI.setOnFinished(e -> {
             GameMessage aiFire = new GameMessage();
             aiFire.difficulty = clientConnection.difficulty;
@@ -120,9 +129,6 @@ public class GameController {
             surrenderMessage.userID = clientConnection.clientID;
             surrenderMessage.difficulty = clientConnection.difficulty;
             surrenderMessage.opponent = clientConnection.opponent;
-
-            System.out.println(clientConnection.opponent);
-
             surrenderMessage.operationInfo = "Response";
             clientConnection.send(surrenderMessage);
             hitMiss.setText("YOU LOSE");
@@ -168,14 +174,6 @@ public class GameController {
             x.r.setDisable(true);
             x.draw();
             shipSizeMap.put(x.getName(), x.getTileSize());
-            for(Pair<Integer, Integer> y : boatPositions.get(x.getName())){
-                Rectangle r = new Rectangle(40, 40);
-                r.setFill(Color.web("#FF6058"));
-                r.setStroke(Color.CYAN);
-                r.setStrokeWidth(3);
-                GridPane.setConstraints(r, y.getKey(), y.getValue());
-                userGrid.getChildren().add(r);
-            }
         }
         if(clientConnection.difficulty == 3){
             enemyFleet.setText(clientConnection.opponent + "'s fleet:");
@@ -217,8 +215,6 @@ public class GameController {
                     boatPositions.get(x).remove(y);
                     image = new ImageView("images/explosion.png");
                     GridPane.setConstraints(image, moveMade.getKey(), moveMade.getValue());
-                    image.setFitWidth(40);
-                    image.setFitHeight(40);
                     userGrid.getChildren().add(image);
                     image.toFront();
                     if(boatPositions.get(x).isEmpty()){
@@ -256,8 +252,6 @@ public class GameController {
 
         image = new ImageView("images/splash.png");
         GridPane.setConstraints(image, moveMade.getKey(), moveMade.getValue());
-        image.setFitWidth(40);
-        image.setFitHeight(40);
         userGrid.getChildren().add(image);
         image.toFront();
 
@@ -265,7 +259,6 @@ public class GameController {
     }
 
     public void responseHandling(GameMessage response) {
-        // todo: micah changed false to variable turn
         aiTextHandling(response.turn, response.AI_Chat_Message);
         if(response.isOver){
             hitMiss.setText("YOU WIN");
@@ -275,7 +268,6 @@ public class GameController {
             pause.play();
             return;
         }
-        // todo: exception here
         if(Objects.equals(response.gameMove.moveMade, position)){
             position = null;
             enemyGrid.getChildren().remove(crosshair);
@@ -284,8 +276,6 @@ public class GameController {
         if(response.gameMove.shipHit){
             image = new ImageView("images/explosion.png");
             GridPane.setConstraints(image, response.gameMove.moveMade.getKey(), response.gameMove.moveMade.getValue());
-            image.setFitWidth(40);
-            image.setFitHeight(40);
             enemyGrid.getChildren().add(image);
             image.toFront();
             if(response.gameMove.shipSunk){
@@ -297,8 +287,6 @@ public class GameController {
         }else{
             image = new ImageView("images/splash.png");
             GridPane.setConstraints(image, response.gameMove.moveMade.getKey(), response.gameMove.moveMade.getValue());
-            image.setFitWidth(40);
-            image.setFitHeight(40);
             enemyGrid.getChildren().add(image);
             image.toFront();
             hitMiss.setText("MISS");
@@ -325,17 +313,13 @@ public class GameController {
     }
 
     public void aiTextHandling(boolean turn, String str){
+        enableFire = turn;
         final IntegerProperty i = new SimpleIntegerProperty(0);
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(
                 Duration.millis(50),
                 event -> {
                     if (i.get() > str.length()) {
-                        if(turn){
-                            makeMove.setDisable(false);
-                            userTurn.setVisible(true);
-                            enemyTurn.setVisible(false);
-                        }
                         timeline.stop();
                     } else {
                         AIText.setText(str.substring(0, i.get()));

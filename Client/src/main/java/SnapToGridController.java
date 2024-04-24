@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Set;
 
 public class SnapToGridController {
 
@@ -63,7 +62,7 @@ public class SnapToGridController {
         String[] boatNames = {"AircraftCarrier", "BattleShip", "Submarine", "Cruiser", "Destroyer"};
         for (int i = 0; i < 5; i++) {
             Rectangle r = new Rectangle();
-            r.setStroke(Color.WHITE);
+            r.setStroke(Color.web("24FF00"));
             int tileSize = boatSizes[i];
             int x = 528 + (5-tileSize)*20;
             int y = 27 + i*80;
@@ -226,7 +225,7 @@ public class SnapToGridController {
                 return;
             }
             for(int i = 0; i < p.getTileSize(); i++){
-                if(!grid[gridx+i][gridy].getFill().equals(Color.web("#FF6058")))
+                if(!grid[gridx+i][gridy].getFill().equals(Color.web("#11161B")))
                     gridPosTemp.add(new Pair<>(gridx+i, gridy));
                 else {
                     resetPosition(p);
@@ -243,7 +242,7 @@ public class SnapToGridController {
                 return;
             }
             for(int i = 0; i < p.getTileSize(); i++){
-                if(!grid[gridx][gridy+i].getFill().equals(Color.web("#FF6058")))
+                if(!grid[gridx][gridy+i].getFill().equals(Color.web("#11161B")))
                     gridPosTemp.add(new Pair<>(gridx, gridy+i));
                 else {
                     resetPosition(p);
@@ -255,7 +254,7 @@ public class SnapToGridController {
             p.setDown(true);
         }
         for(Pair<Integer, Integer> gridPos : gridPosTemp){
-            grid[gridPos.getKey()][gridPos.getValue()].setFill(Color.web("#FF6058"));
+            grid[gridPos.getKey()][gridPos.getValue()].setFill(Color.web("#11161B"));
         }
         gridPosTemp.clear();
         p.setX(squareSize * gridx);
@@ -309,7 +308,7 @@ public class SnapToGridController {
                     continue;
                 }
                 for(int i = 0; i < p.getTileSize(); i++){
-                    if(!grid[gridx+i][gridy].getFill().equals(Color.web("#FF6058")))
+                    if(!grid[gridx+i][gridy].getFill().equals(Color.web("#11161B")))
                         gridPosTemp.add(new Pair<>(gridx+i, gridy));
                     else {
                         gridPosTemp.clear();
@@ -324,7 +323,7 @@ public class SnapToGridController {
                     continue;
                 }
                 for(int i = 0; i < p.getTileSize(); i++){
-                    if(!grid[gridx][gridy+i].getFill().equals(Color.web("#FF6058")))
+                    if(!grid[gridx][gridy+i].getFill().equals(Color.web("#11161B")))
                         gridPosTemp.add(new Pair<>(gridx, gridy+i));
                     else {
                         gridPosTemp.clear();
@@ -338,7 +337,7 @@ public class SnapToGridController {
             break;
         }
         for(Pair<Integer, Integer> gridPos : gridPosTemp){
-            grid[gridPos.getKey()][gridPos.getValue()].setFill(Color.web("#FF6058"));
+            grid[gridPos.getKey()][gridPos.getValue()].setFill(Color.web("#11161B"));
         }
         gridPosTemp.clear();
         p.setX(squareSize * gridx);
@@ -350,7 +349,6 @@ public class SnapToGridController {
         }
     }
 
-    //todo: when is this sent? Can this be sent user selects deploy?
     public HashMap<String, ArrayList<Pair<Integer, Integer>>> toSend(){
         HashMap<String, ArrayList<Pair<Integer, Integer>>> toReturn = new HashMap<>();
         for(Piece toStore : boatList.keySet()){

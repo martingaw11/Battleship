@@ -185,7 +185,7 @@
             <children>
                 <Button fx:id="deployFleet" layoutX="496.0" layoutY="26.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="209.0" stylesheets="@../stylesheets/Button.css" text="Deploy Fleet">
                <effect>
-                  <DropShadow height="90.0" radius="44.5" spread="0.6" width="90.0">
+                  <DropShadow height="90.0" radius="44.5" spread="0.4" width="90.0">
                      <color>
                         <Color green="1.0" blue="1.0" />
                      </color>
