@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="root" style="-fx-background-color: #11161A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SnapToGridController">
+<BorderPane fx:id="root" style="-fx-background-color: #11161A;" xmlns="http://javafx.com/javafx/19.0.2.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SnapToGridController">
     <center>
         <Pane fx:id="pane" prefHeight="600.0" prefWidth="800.0" BorderPane.alignment="CENTER">
             <children>
@@ -185,7 +185,7 @@
             <children>
                 <Button fx:id="deployFleet" layoutX="496.0" layoutY="26.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="209.0" stylesheets="@../stylesheets/Button.css" text="Deploy Fleet">
                <effect>
-                  <DropShadow height="90.0" radius="44.5" spread="0.4" width="90.0">
+                  <DropShadow height="30.0" radius="14.5" spread="0.6" width="30.0">
                      <color>
                         <Color green="1.0" blue="1.0" />
                      </color>

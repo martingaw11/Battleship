@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="rootGame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #11161A;" stylesheets="@../stylesheets/gameStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameController">
+<BorderPane fx:id="rootGame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #11161A;" stylesheets="@../stylesheets/gameStyle.css" xmlns="http://javafx.com/javafx/19.0.2.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameController">
    <left>
       <Pane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
@@ -395,6 +395,18 @@
                         </DropShadow>
                      </effect>
                   </Button>
+                  <Text fx:id="warning" fill="RED" fontSmoothingType="LCD" layoutX="35.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a position first!" textAlignment="CENTER" visible="false" wrappingWidth="129.880859375">
+                     <font>
+                        <Font name="Verdana" size="20.0" />
+                     </font>
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Text>
                </children>
             </Pane>
          </children></Pane>

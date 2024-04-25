@@ -6,18 +6,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public class GameController {
     TextField enemyFleet;
 
     @FXML
-    Text userTurn, enemyTurn, carrier, battleship, submarine, cruiser, destroyer, hitMiss, AIText;
+    Text userTurn, enemyTurn, carrier, battleship, submarine, cruiser, destroyer, hitMiss, AIText, warning;
 
     @FXML
     HBox missHitHbox;
@@ -60,8 +60,10 @@ public class GameController {
     PauseTransition pause, pauseAI;
 
     ImageView crosshair = new ImageView("images/crosshair.png");
-    Image explosion = new Image("images/explosion.png");
-    Image splash = new Image("images/splash.png");
+
+    MediaPlayer hit = new MediaPlayer(new Media(new File("src/main/resources/hit.mp3").toURI().toString()));
+
+    MediaPlayer miss = new MediaPlayer(new Media(new File("src/main/resources/splash.wav").toURI().toString()));
 
     Pair<Integer, Integer> position =  null;
 
@@ -145,8 +147,11 @@ public class GameController {
         });
         makeMove.setOnAction(e -> {
             if(position == null){
+                warning.setVisible(true);
                 return;
             }
+            warning.setVisible(false);
+            currentPosition.setDisable(true);
             makeMove.setDisable(true);
             GameMessage fire = new GameMessage();
             fire.userID = clientConnection.clientID;
@@ -238,6 +243,8 @@ public class GameController {
                         return tempMessage;
                     }
                     missHitHbox.toFront();
+                    hit.stop();
+                    hit.play();
                     fade.play();
                     scale.play();
                     return tempMessage;
@@ -247,6 +254,8 @@ public class GameController {
 
         hitMiss.setText("MISS");
         missHitHbox.toFront();
+        miss.stop();
+        miss.play();
         fade.play();
         scale.play();
 
@@ -263,6 +272,8 @@ public class GameController {
         if(response.isOver){
             hitMiss.setText("YOU WIN");
             missHitHbox.toFront();
+            hit.stop();
+            hit.play();
             fade.play();
             scale.play();
             pause.play();
@@ -284,12 +295,16 @@ public class GameController {
             }else{
                 hitMiss.setText("HIT");
             }
+            hit.stop();
+            hit.play();
         }else{
             image = new ImageView("images/splash.png");
             GridPane.setConstraints(image, response.gameMove.moveMade.getKey(), response.gameMove.moveMade.getValue());
             enemyGrid.getChildren().add(image);
             image.toFront();
             hitMiss.setText("MISS");
+            miss.stop();
+            miss.play();
         }
         missHitHbox.toFront();
         fade.play();

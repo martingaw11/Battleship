@@ -55,3 +55,46 @@
             cyan,
             radial-gradient(center 50% 50%, radius 100%, #00FFFF, #E0FFFF);
 }
+
+#confirmButton{
+    -fx-text-fill: linear-gradient(navajowhite, #d0d0d0);
+    -fx-border-color: null;
+}
+
+#confirmButton:hover{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #ff5400 0%, #be1d00 100%),
+            #FF3131,
+            #E35335,
+            radial-gradient(center 50% 50%, radius 100%, #FF4433, #FF2400);
+}
+
+#denyButton{
+    -fx-border-color: null;
+    -fx-text-fill: linear-gradient(navajowhite, #d0d0d0);
+}
+
+#denyButton:hover{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #50C878 0%, #228B22 100%),
+            #32CD32,
+            #00A36C,
+            radial-gradient(center 50% 50%, radius 100%, #4CBB17, #0FFF50);
+    -fx-text-fill: linear-gradient(#FF4433, #FF2400);
+}
+
+#backToMainMenu{
+    -fx-background-color: #11161A;
+    -fx-background-radius: 50;
+    -fx-font-family: "Verdana";
+    -fx-text-fill: linear-gradient(navajowhite, #d0d0d0);
+    -fx-font-size: 20;
+    -fx-border-color: null;
+}
+#backToMainMenu:hover{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #ff5400 0%, #be1d00 100%),
+            #FF3131,
+            #E35335,
+            radial-gradient(center 50% 50%, radius 100%, #FF4433, #FF2400);
+}

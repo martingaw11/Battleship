@@ -23,12 +23,21 @@ public class MainMenuController {
             medium.setVisible(true);
             hard.setVisible(true);
         });
-        pvp.setOnAction(e -> { // TEMPORARY so you can use both buttons to go to the next scene, there will be a separate scene for bot difficulty choice don't worry
-            transitionScene(3);
-        });
+        pvp.setOnAction(e -> transitionScene(3));
         exitGame.setOnAction(e -> {
             Platform.exit();
             System.exit(0);
+        });
+        rules.setOnAction(e -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("fxml/Rules.fxml")));
+                Parent temp = loader.load();
+                RulesController ctr = loader.getController();
+                ctr.clientConnection = clientConnection;
+                root.getScene().setRoot(temp);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
         easy.setOnAction(e -> transitionScene(0));
         medium.setOnAction(e -> transitionScene(1));

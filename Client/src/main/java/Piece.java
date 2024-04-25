@@ -1,10 +1,6 @@
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Pair;
-
-import java.util.ArrayList;
 
 public class Piece {
 
