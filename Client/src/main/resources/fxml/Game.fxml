@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
@@ -407,6 +408,18 @@
                         </DropShadow>
                      </effect>
                   </Text>
+                  <ToggleButton fx:id="toggleSound" layoutX="27.0" layoutY="513.0" mnemonicParsing="false" stylesheets="@../stylesheets/gameStyle.css" text="Sound: OFF">
+                     <font>
+                        <Font name="Verdana" size="20.0" />
+                     </font>
+                     <effect>
+                        <DropShadow spread="0.6">
+                           <color>
+                              <Color green="1.0" blue="1.0" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </ToggleButton>
                </children>
             </Pane>
          </children></Pane>

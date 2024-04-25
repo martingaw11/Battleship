@@ -53,3 +53,20 @@
     -fx-padding: 10 15 13 15;
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
 }
+#toggleSound{
+    -fx-background-color: #11161A;
+    -fx-text-fill: linear-gradient(navajowhite, #d0d0d0);
+    -fx-background-radius: 50;
+}
+#toggleSound:hover{
+    -fx-background-color: cyan;
+    -fx-text-fill: linear-gradient(#FF4433, #FF2400);
+}
+#toggleSound:selected{
+    -fx-background-color:
+            linear-gradient(from 0% 93% to 0% 100%, #50C878 0%, #228B22 100%),
+            #32CD32,
+            #00A36C,
+            radial-gradient(center 50% 50%, radius 100%, #4CBB17, #0FFF50);
+    -fx-text-fill: linear-gradient(#FF4433, #FF2400);
+}

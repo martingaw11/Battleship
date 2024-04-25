@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -52,6 +53,9 @@ public class GameController {
 
     @FXML
     HBox missHitHbox;
+
+    @FXML
+    ToggleButton toggleSound;
 
     FadeTransition fade;
 
@@ -116,6 +120,11 @@ public class GameController {
             aiFire.userID = clientConnection.clientID;
             aiFire.operationInfo = "AI Fire";
             clientConnection.send(aiFire);
+        });
+
+        toggleSound.setOnAction(e -> {
+            if(toggleSound.isSelected()) toggleSound.setText("Sound: ON ");
+            else toggleSound.setText("Sound: OFF");
         });
 
         forfeit.setOnAction(e -> {
@@ -243,8 +252,10 @@ public class GameController {
                         return tempMessage;
                     }
                     missHitHbox.toFront();
-                    hit.stop();
-                    hit.play();
+                    if (toggleSound.isSelected()) {
+                        hit.stop();
+                        hit.play();
+                    }
                     fade.play();
                     scale.play();
                     return tempMessage;
@@ -254,8 +265,10 @@ public class GameController {
 
         hitMiss.setText("MISS");
         missHitHbox.toFront();
-        miss.stop();
-        miss.play();
+        if (toggleSound.isSelected()) {
+            miss.stop();
+            miss.play();
+        }
         fade.play();
         scale.play();
 
@@ -272,8 +285,10 @@ public class GameController {
         if(response.isOver){
             hitMiss.setText("YOU WIN");
             missHitHbox.toFront();
-            hit.stop();
-            hit.play();
+            if (toggleSound.isSelected()) {
+                hit.stop();
+                hit.play();
+            }
             fade.play();
             scale.play();
             pause.play();
@@ -295,16 +310,20 @@ public class GameController {
             }else{
                 hitMiss.setText("HIT");
             }
-            hit.stop();
-            hit.play();
+            if (toggleSound.isSelected()) {
+                hit.stop();
+                hit.play();
+            }
         }else{
             image = new ImageView("images/splash.png");
             GridPane.setConstraints(image, response.gameMove.moveMade.getKey(), response.gameMove.moveMade.getValue());
             enemyGrid.getChildren().add(image);
             image.toFront();
             hitMiss.setText("MISS");
-            miss.stop();
-            miss.play();
+            if (toggleSound.isSelected()) {
+                miss.stop();
+                miss.play();
+            }
         }
         missHitHbox.toFront();
         fade.play();
